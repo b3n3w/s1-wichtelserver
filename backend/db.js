@@ -1,7 +1,7 @@
 
 const mongoose = require("mongoose");
 
-const uri = 'mongodb+srv://@127.0.0.1/wichteln?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://administrator:UBQQdwRIwK6xFa6d@cluster0-httvm.mongodb.net/wichteln?retryWrites=true&w=majority'
 
 const InitiateMongoServer = async () => {
   try {
@@ -11,7 +11,7 @@ const InitiateMongoServer = async () => {
       useCreateIndex : true
     });
   
-    console.log("Connected to MongoDB Cloud Atlas - Cluster0 : united_skillserver");
+    console.log("Connected to MongoDB Cloud Atlas - Cluster0 : wichteln");
   } catch (e) {
     console.log(e);
     throw e;
