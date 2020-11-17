@@ -8,3 +8,6 @@ Requirents:
 
 - npm install
 - mongodb Server
+
+
+https://codesource.io/setting-up-vue-authentication-using-expressjs-mongodb-and-jwt/
