@@ -7,6 +7,7 @@ S1 Wichtelserver
 Requirents:
 
 - npm install
+- npm install -g @vue/cli 
 - mongodb Server
 
 

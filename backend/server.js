@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const InitiateMongoServer = require("./backend/db");
+const InitiateMongoServer = require("./config/db");
+const cors = require("cors");
+const morgan = require("morgan");
 
 // Initiate Mongo DB Server Connection
 InitiateMongoServer();
@@ -10,17 +12,25 @@ const app = express();
 
 var session = require('express-session'),
   path = require('path');
-  
-  
-  //Store all JS and CSS in Scripts folder.
-  app.use(express.static(__dirname + '/frontend'));
-  
-// Middleware
-  app.use(express.json());
-  app.use(express.urlencoded());
 
-  var routes = require('./backend/router');
-  app.use('/', routes);
+
+//Store all JS and CSS in Scripts folder.
+app.use(express.static(__dirname + '/frontend'));
+
+
+//registering cors
+app.use(cors());
+
+// configire morgan
+app.use(morgan("dev")); 
+
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded());
+
+var routes = require('./api/routes/router');
+app.use('/', routes);
 
 //set Session Cookies
 app.use(session({
@@ -35,7 +45,7 @@ app.use(session({
 //check if cookie still saved in browser
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
-      res.clearCookie('user_sid');        
+    res.clearCookie('user_sid');
   }
   next();
 });
@@ -43,10 +53,10 @@ app.use((req, res, next) => {
 //check if user is stil logged in
 var sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
-      res.redirect("./view/mainpage.html");
+    res.redirect("./view/mainpage.html");
   } else {
-      next();
-  }    
+    next();
+  }
 };
 
 
