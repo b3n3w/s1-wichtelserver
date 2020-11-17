@@ -47,7 +47,7 @@ const sendRegisterMail = (req) => {
     })
 }
 
-exports.testmail = (req, res) => {
+const testmail = (req, res) => {
     console.log("test");
     transport.sendMail(testmessage, (error, info) => {
         if (error) {

@@ -25,7 +25,7 @@ exports.registerNewUser = async (req, res) => {
 
         let data = await user.save();
         const token = await user.generateAuthToken();
-        nodemailer.sendRegisterMail(req.body.email);
+        nodemailer(req.body.email);
         res.status(201).json({ data, token });
     } catch (err) {
         res.status(400).json({ err: err });
