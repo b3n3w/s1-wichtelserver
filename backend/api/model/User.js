@@ -49,7 +49,10 @@ UserSchema.pre(
     async function (next) {
         const user = this;
         if (user.isModified("password")) {
+        
             const hash = await bcrypt.hash(this.password, 10);
+            user.password = hash;
+            console.log(user)
         }
         next();
     }
@@ -69,7 +72,8 @@ UserSchema.methods.generateAuthToken = async function () {
 
 //this method search for a user by email and password.
 UserSchema.statics.findByCredentials = async (username, password) => {
-    const user = await User.findOne({ username });
+    
+    const user = await User.findOne({username});
     console.log(user);
     if (!user) {
         throw new Error({ error: "Invalid login details" });
@@ -81,4 +85,5 @@ UserSchema.statics.findByCredentials = async (username, password) => {
     return user;
 };
 
-module.exports = mongoose.model('users', UserSchema);
+const User = mongoose.model("User", UserSchema);
+module.exports = User;

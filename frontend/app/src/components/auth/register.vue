@@ -139,7 +139,7 @@
 
         <p class="p_login">
           Bereits einen Account anglegt?
-          <router-link to="/login">Login</router-link>
+          <router-link to="/">Login</router-link>
         </p>
       </form>
     </div>

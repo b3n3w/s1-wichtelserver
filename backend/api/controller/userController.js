@@ -33,6 +33,7 @@ exports.registerNewUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
+    console.log("user "+req.body.username +"versucht sich anzumelden");
     try {
         const username = req.body.username;
         const password = req.body.password;
