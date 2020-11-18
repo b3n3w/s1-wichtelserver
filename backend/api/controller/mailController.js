@@ -58,7 +58,7 @@ const sendAccountVerify = async (user) => {
     }
 
     const mail_token_verification = jwt.sign(mail, process.env.JWT_VERIFY_KEY, { expiresIn: '1d' });
-    var url = process.env.baseUrl + "verify?id=" + mail_token_verification;
+    var url = process.env.VUE_APP_API_ENDPOINT + "verify?id=" + mail_token_verification;
 
     let transportMail = await transport.sendMail({
         from: sender,

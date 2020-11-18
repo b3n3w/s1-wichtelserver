@@ -1,9 +1,15 @@
 <template>
   <div>
-    <h1>This is the home page</h1>
+     <Menu />
   </div>
 </template>
 <script>
-export default {};
+import Menu from "@/components/Menu";
+export default {
+  components: {
+    Menu,
+  },
+};
 </script>
-<style scoped></style>
+<style >
+</style>

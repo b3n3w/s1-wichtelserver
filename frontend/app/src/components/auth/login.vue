@@ -1,122 +1,255 @@
 <template>
-  <div>
-    <div class="container-fluid">
-      <div class="heading_index">
-        <h1>S1 Wichtelserver</h1>
+  <div class="heading">
+    <h2>Sign In</h2>
+    <form action="#" @submit.prevent="loginUser">
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Benutzername"
+          v-model="login.username"
+          required
+        />
       </div>
-    </div>
-    <div id="christmas">
-      <div class="flake large f-1"></div>
-      <div class="flake large f-2"></div>
-      <div class="flake large f-3"></div>
-      <div class="flake large f-4"></div>
-      <div class="flake large f-5"></div>
-      <div class="flake large f-6"></div>
-      <div class="flake large f-7"></div>
-      <div class="flake large f-8"></div>
-      <div class="flake large f-9"></div>
-      <div class="flake large f-10"></div>
-      <div class="flake large f-11"></div>
-      <div class="flake large f-12"></div>
-      <div class="flake large f-13"></div>
-      <div class="flake large f-14"></div>
-      <div class="flake large f-15"></div>
-      <div class="flake large f-16"></div>
-      <div class="flake large f-17"></div>
-      <div class="flake f-18"></div>
-      <div class="flake f-19"></div>
-      <div class="flake f-20"></div>
-      <div class="flake f-21"></div>
-      <div class="flake f-22"></div>
-      <div class="flake f-23"></div>
-      <div class="flake f-24"></div>
-      <div class="flake f-25"></div>
-      <div class="flake f-26"></div>
-      <div class="flake f-27"></div>
-      <div class="flake f-28"></div>
-      <div class="flake f-29"></div>
-      <div class="flake f-30"></div>
-      <div class="flake f-31"></div>
-      <div class="tree left">
-        <div class="snow"></div>
+
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Passwort"
+          v-model="login.password"
+          required
+        />
       </div>
-      <div class="tree right">
-        <div class="snow"></div>
-      </div>
-      <div class="ground"></div>
-    </div>
 
-    <div class="heading">
-      <h2>Sign In</h2>
-      <form action="#" @submit.prevent="loginUser">
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"><i class="fa fa-user"></i></span>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Benutzername"
-            v-model="login.username"
-            required
-          />
-        </div>
+      <button class="float">Login</button>
 
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Passwort"
-            v-model="login.password"
-            required
-          />
-        </div>
-
-        <button class="float">Login</button>
-
-        Noch keinen Wichtelaccount anglegt?
-        <router-link to="/register">Registrieren</router-link>
-      </form>
-    </div>
+      Noch keinen Wichtelaccount anglegt?
+      <router-link to="/register">Registrieren</router-link>
+    </form>
   </div>
 </template>
 
 <script>
 import swal from "sweetalert";
+
 export default {
   data() {
     return {
       login: {
-        email: "",
+        username: "",
         password: "",
       },
     };
   },
   methods: {
     async loginUser() {
-      await this.$http.post("/login", this.login).then(
-        function (response) {
+      this.$axios.post("/login", this.login).then(
+        (response) => {
+          console.log(response);
           let token = response.data.token;
           localStorage.setItem("jwt", token);
-
+  
           if (token) {
             swal("Success", "Login Successful", "Error");
             this.$router.push("/home");
           }
         },
-        function (response) {
-          if(response.status === 402){
-            swal("Error", "Nutzer noch nicht aktiviert", "error");
+        (error) => {
+          if (error.response.status === 402) {
+            swal({
+             title: "Och nö",
+             text: "Lieber Wichtel, bitte verifiziere deine Email",
+             imageUrl: 'https://unsplash.it/400/200',
+             
+            });
+          } else {
+            swal("Error", "Something Went Wrong", "error");
           }
-          //console.log(response.body);
         }
       );
-      /*} catch (err) {
-        console.log(err.response.status);
-        swal("Error", "Something Went Wrong", "error");
-        console.log(err.response);
-      }*/
     },
   },
 };
 </script>
+<style >
+
+.heading_index h1 {
+    margin: 10px;
+    color: rgb(255, 255, 255);
+}
+
+body, input, button {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.login {
+    padding: 15px;
+    width: 400px;
+    min-height: 600px;
+    margin: 10% auto auto;
+    background-color: rgba(255, 255, 255, 0.247);
+    border-radius: 10px;
+}
+
+.login .heading {
+    text-align: center;
+    margin-top: 1%;
+}
+
+.login .heading h2 {
+    font-size: 3em;
+    font-weight: 300;
+    color: rgb(255, 255, 255);
+    display: inline-block;
+    padding-bottom: 5px;
+    text-shadow: 1px 1px 3px #23203b;
+}
+
+.login form .input-group {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login form .input-group:last-of-type {
+    border-top: none;
+}
+
+.login form .input-group span {
+    background: transparent;
+    min-width: 53px;
+    border: none;
+}
+
+.login form .input-group span i {
+    font-size: 1.5em;
+    color: rgb(255, 255, 255);
+}
+
+.login form .input-group p {
+    color: blanchedalmond;
+}
+.login form input.form-control {
+    display: block;
+    width: auto;
+    height: auto;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: none;
+    border-radius: 0px;
+    padding: 10px;
+    font-size: 1.6em;
+    width: 100%;
+    background: transparent;
+    color: #ffffffe5;
+}
+
+.login form input.form-control:focus {
+    border: none;
+}
+
+.login form button {
+    margin-top: 15px;
+    background: #27AE60;
+    border: none;
+    font-size: 1.4em;
+    font-weight: 300;
+    padding: 5px 0;
+    width: 100%;
+    border-radius: 10px;
+    color: #b3eecc;
+    border-bottom: 4px solid #1e8449;
+}
+
+.login form button:hover {
+    background: #30b166;
+    -webkit-animation: hop 1s;
+    animation: hop 1s;
+}
+
+.float {
+    display: inline-block;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+.float:hover, .float:focus, .float:active {
+    -webkit-transform: translateY(-3px);
+    transform: translateY(-3px);
+}
+
+/* Large Devices, Wide Screens */
+
+@media only screen and (max-width: 1281px) {
+    .login {
+        width: 600px;
+        font-size: 2em;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .login {
+        margin-top: 2%;
+        width: 600px;
+        font-size: 1.7em;
+    }
+}
+
+/* Medium Devices, Desktops */
+
+@media only screen and (max-width: 992px) {
+    .login {
+        margin-top: 1%;
+        width: 550px;
+        font-size: 1.7em;
+        min-height: 0;
+    }
+}
+
+/* Small Devices, Tablets */
+
+@media only screen and (max-width: 768px) {
+    .login {
+        margin-top: 100px;
+        width: 500px;
+        font-size: 1.3em;
+        min-height: 0;
+    }
+}
+
+/* Extra Small Devices, Phones */
+
+/*OnePlus*/
+
+@media only screen and (max-width: 480px) {
+    .login {
+        margin-top: 10%;
+        width: 400px;
+        font-size: 1em;
+        min-height: 0;
+    }
+    .login h2 {
+        margin-top: 0;
+    }
+}
+
+/* Custom, iPhone Retina */
+
+@media only screen and (max-width: 320px) {
+    .login {
+        margin-top: 0;
+        width: 200px;
+        font-size: 0.7em;
+        min-height: 0;
+    }
+}
+</style>
 

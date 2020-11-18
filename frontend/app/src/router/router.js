@@ -15,14 +15,14 @@ const routes = [
   },
   {
     path: "/",
-    name: "login",
-    component: () => import("../views/login.vue")
+    name: "index",
+    component: () => import("../views/index.vue")
   },
   {
-    path: "/register",
-    name: "register",
-    component: () => import("../views/register.vue")
-  }
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/profile.vue")
+  },
 ];
 
 const router = new VueRouter({
