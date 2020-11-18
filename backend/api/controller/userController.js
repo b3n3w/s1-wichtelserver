@@ -1,5 +1,8 @@
 const User = require("../model/User");
 var nodemailer = require('../controller/mailController');
+const jwt = require('jsonwebtoken');
+const mongoose = require("mongoose");
+
 
 exports.registerNewUser = async (req, res) => {
 
@@ -25,7 +28,7 @@ exports.registerNewUser = async (req, res) => {
 
         let data = await user.save();
         const token = await user.generateAuthToken();
-        nodemailer(req.body.email);
+        nodemailer(user);
         res.status(201).json({ data, token });
     } catch (err) {
         res.status(400).json({ err: err });
@@ -33,7 +36,7 @@ exports.registerNewUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-    console.log("user "+req.body.username +"versucht sich anzumelden");
+    console.log("user " + req.body.username + " versucht sich anzumelden");
     try {
         const username = req.body.username;
         const password = req.body.password;
@@ -43,6 +46,9 @@ exports.loginUser = async (req, res) => {
                 .status(401)
                 .json({ error: "Login failed! Check authentication credentials" });
         }
+        if (!user.active) {
+            return res.status(402).json({ error: "Login failed! User not activated yes" });
+        }
         const token = await user.generateAuthToken();
         res.status(201).json({ user, token });
     } catch (err) {
@@ -50,6 +56,37 @@ exports.loginUser = async (req, res) => {
     }
 };
 
+exports.verifyUser = async (req, res) => {
+
+    token = req.query.id;
+    if (token) {
+        try {
+            jwt.verify(token, process.env.JWT_VERIFY_KEY, (e, decoded) => {
+                if (e) {
+                    console.log(e)
+                    return res.sendStatus(403)
+                } else {
+                    id = decoded.id;
+                    console.log(id);
+                    const user = User.findById(id, function (err, user) {
+                        if (!user) {
+                            throw new Error({ error: "User for verification not found" });
+                        } else {
+                            user.active = true;
+                            user.save();
+                            res.status(201).send('Accountaktivierung erfolgreich ! Du kannst kannst dich nun einloggen <3')
+                        }
+                    })
+                }
+            });
+        } catch (err) {
+            console.log(err)
+            return res.sendStatus(403)
+        }
+    } else {
+        return res.sendStatus(403)
+    }
+}
 
 exports.getUserDetails = async (req, res) => {
     await res.json(req.userData);

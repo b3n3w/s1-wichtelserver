@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     firstname: {
         type: String
     },
-   lastname: {
+    lastname: {
         type: String
     },
     street: {
@@ -53,7 +53,7 @@ UserSchema.pre(
     async function (next) {
         const user = this;
         if (user.isModified("password")) {
-        
+
             const hash = await bcrypt.hash(this.password, 10);
             user.password = hash;
             console.log(user)
@@ -66,18 +66,17 @@ UserSchema.pre(
 UserSchema.methods.generateAuthToken = async function () {
     const user = this;
     const token = jwt.sign(
-        { _id: user._id, name: user.username},
-        "LjZWkQK%a6qE5%HE!MVZu5wrkzRgt"
+        { _id: user._id, name: user.username },
+        process.env.JWT_SECRET_KEY
     );
     user.tokens = user.tokens.concat({ token });
     await user.save();
     return token;
 };
 
-//this method search for a user by email and password.
+//this method search for a user by username and password.
 UserSchema.statics.findByCredentials = async (username, password) => {
-    
-    const user = await User.findOne({username});
+    const user = await User.findOne({ username });
     console.log(user);
     if (!user) {
         throw new Error({ error: "Invalid login details" });
@@ -88,6 +87,7 @@ UserSchema.statics.findByCredentials = async (username, password) => {
     }
     return user;
 };
+
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

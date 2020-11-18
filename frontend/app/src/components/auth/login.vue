@@ -45,41 +45,38 @@
       </div>
       <div class="ground"></div>
     </div>
-   
-      <div class="heading">
-        <h2>Sign In</h2>
-        <form action="#"
-        @submit.prevent="loginUser">
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Benutzername"
-              v-model="login.username"
-              required
-            />
-          </div>
 
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Passwort"
-              v-model="login.password"
-              required
-            />
-          </div>
+    <div class="heading">
+      <h2>Sign In</h2>
+      <form action="#" @submit.prevent="loginUser">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Benutzername"
+            v-model="login.username"
+            required
+          />
+        </div>
 
-          <button class="float">Login</button>
-           
-           Noch keinen Wichtelaccount anglegt? <router-link to="/register"
-              >Registrieren</router-link
-            >
-        </form>
-      </div>
-  
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Passwort"
+            v-model="login.password"
+            required
+          />
+        </div>
+
+        <button class="float">Login</button>
+
+        Noch keinen Wichtelaccount anglegt?
+        <router-link to="/register">Registrieren</router-link>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -96,18 +93,28 @@ export default {
   },
   methods: {
     async loginUser() {
-      try {
-        let response = await this.$http.post("/login", this.login);
-        let token = response.data.token;
-        localStorage.setItem("jwt", token);
-        if (token) {
-          swal("Success", "Login Successful", "Error");
-          this.$router.push("/home");
+      await this.$http.post("/login", this.login).then(
+        function (response) {
+          let token = response.data.token;
+          localStorage.setItem("jwt", token);
+
+          if (token) {
+            swal("Success", "Login Successful", "Error");
+            this.$router.push("/home");
+          }
+        },
+        function (response) {
+          if(response.status === 402){
+            swal("Error", "Nutzer noch nicht aktiviert", "error");
+          }
+          //console.log(response.body);
         }
-      } catch (err) {
+      );
+      /*} catch (err) {
+        console.log(err.response.status);
         swal("Error", "Something Went Wrong", "error");
         console.log(err.response);
-      }
+      }*/
     },
   },
 };

@@ -8,7 +8,6 @@ const auth = require("../../config/auth");
 
 
 
-
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -25,11 +24,11 @@ router.get('/', function (req, res) {
 router.post("/register", userController.registerNewUser);
 router.post("/login", userController.loginUser);
 router.get("/me", auth, userController.getUserDetails);
+router.get('/verify', userController.verifyUser);
 
 router.post('/api/testmail', function (req, res) {
     nodemailer(req, res);
 });
-
 
 
 

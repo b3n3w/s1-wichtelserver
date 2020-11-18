@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 
+const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
 const testmessage = {
 
     from: '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>',
@@ -26,7 +27,7 @@ transport.verify(function (err, success) {
     if (err) {
         console.log(err);
     } else {
-        console.log("IONOSis ready to take messages")
+        console.log("Mailer is ready to take messages")
     }
 })
 
@@ -48,10 +49,32 @@ const sendRegisterMail = (req) => {
     })
 }
 
-exports.sendAccountVerify = (req) => {
-    var rand = Math.floor((Math.random() * 100) + 54)
-    var host = req.get('host');
-    var link = "http://" + host + "/verify?id=" + rand;
+const sendAccountVerify = async (user) => {
+    var date = new Date();
+
+    var mail = {
+        "id": user._id,
+        "created": date.toString()
+    }
+
+    const mail_token_verification = jwt.sign(mail, process.env.JWT_VERIFY_KEY, { expiresIn: '1d' });
+    var url = process.env.baseUrl + "verify?id=" + mail_token_verification;
+
+    let transportMail = await transport.sendMail({
+        from: sender,
+        to: user.email,
+        subject: "S1-Wichteln Account Bestätigung",
+        text: "Ey jo bitte klick auf den Link " + url,
+    }, (error, info) => {
+
+        if (error) {
+            console.log(error)
+            return;
+        }
+        console.log('Message sent successfully!');
+        console.log(info);
+        transporter.close();
+    });
 }
 
 
@@ -65,4 +88,4 @@ const testmail = (req, res) => {
     });
 }
 
-module.exports = sendRegisterMail;
+module.exports = sendAccountVerify;
