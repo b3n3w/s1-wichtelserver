@@ -33,6 +33,10 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String
     },
+    active: {
+        type: Boolean,
+        default: false
+    },
     tokens: [
         {
             token: {

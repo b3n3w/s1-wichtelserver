@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 const testmessage = {
 
@@ -17,7 +18,7 @@ const transport = nodemailer.createTransport({
     secure: true,
     auth: {
         user: "wichtelfee@s1-wichteln.de",
-        pass: "^CmDvo7Y%k*ukajpw"
+        pass: process.env.MAIL_PASS,
     }
 });
 
@@ -46,6 +47,13 @@ const sendRegisterMail = (req) => {
         console.log('Message sent : %s', info.messageId)
     })
 }
+
+exports.sendAccountVerify = (req) => {
+    var rand = Math.floor((Math.random() * 100) + 54)
+    var host = req.get('host');
+    var link = "http://" + host + "/verify?id=" + rand;
+}
+
 
 const testmail = (req, res) => {
     console.log("test");
