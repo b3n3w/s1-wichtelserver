@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/home.vue";
 
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,6 +24,22 @@ const routes = [
     name: "profile",
     component: () => import("../views/profile.vue")
   },
+  {
+    path: "/selectGroup",
+    name: "selectGroup",
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import("../components/selectGroup.vue")
+  },
+  {
+    path: "/createGroup",
+    name: "createGroup",
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import("../components/createGroup.vue")
+  }
 ];
 
 const router = new VueRouter({

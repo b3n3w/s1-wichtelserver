@@ -25,11 +25,11 @@ exports.registerNewUser = async (req, res) => {
             city: req.body.city
         });
 
-
         let data = await user.save();
         const token = await user.generateAuthToken();
         nodemailer(user);
         res.status(201).json({ data, token });
+
     } catch (err) {
         res.status(400).json({ err: err });
     }
@@ -47,15 +47,26 @@ exports.loginUser = async (req, res) => {
                 .json({ error: "Login failed! Check authentication credentials" });
         }
         if (!user.active) {
-            return res.status(402).json({ error: "Login failed! User not activated yes" });
+            return res.status(402).json({ error: "Login failed! User not activated yet" });
         }
         const token = await user.generateAuthToken();
-        res.status(201).json({ user, token });
+        const firstLogin = user.firstLogin;
+        res.status(201).json({ user, token, firstLogin });
+
+        if (user.firstLogin) {
+            user.firstLogin = false;
+            user.save();
+        }
     } catch (err) {
         res.status(400).json({ err: err });
     }
 };
 
+exports.changeUserPasswort = async (req, res) => {
+
+
+
+}
 exports.verifyUser = async (req, res) => {
 
     token = req.query.id;

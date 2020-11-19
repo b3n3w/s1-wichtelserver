@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     async registerUser() {
-      this.$axios.post("/register", this.register).then(
+      this.$axios.post("/user/register", this.register).then(
         (response) => {
           console.log(response);
           let token = response.data.token;

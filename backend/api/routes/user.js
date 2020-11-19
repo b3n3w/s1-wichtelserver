@@ -1,0 +1,19 @@
+var express = require('express');
+var router = express.Router();
+var groupController = require('../controller/groupController')
+var userController = require('../controller/userController');
+
+const auth = require("../../config/auth");
+
+
+router.get("/me", auth, userController.getUserDetails);
+router.get('/verify', userController.verifyUser);
+
+
+router.post("/register", userController.registerNewUser);
+router.post("/login", userController.loginUser);
+
+
+
+router.use(express.json())
+module.exports = router;

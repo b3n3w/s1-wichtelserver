@@ -4,7 +4,9 @@ const InitiateMongoServer = require("./config/db");
 const cors = require("cors");
 const morgan = require("morgan");
 var dotenv = require('dotenv').config();
-
+var router = require('./api/routes/router');
+var userRouter = require('./api/routes/user')
+var groupRouter = require('./api/routes/group')
 
 // Initiate Mongo DB Server Connection
 InitiateMongoServer();
@@ -12,13 +14,8 @@ InitiateMongoServer();
 
 const app = express();
 
-var session = require('express-session'),
-  path = require('path');
-
-
 //Store all JS and CSS in Scripts folder.
 app.use(express.static(__dirname + '/frontend'));
-
 
 //registering cors
 app.use(cors());
@@ -31,36 +28,10 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-var routes = require('./api/routes/router');
-app.use('/', routes);
 
-//set Session Cookies
-app.use(session({
-  secret: 'test_secrete',
-  saveUninitialized: true,
-  resave: false,
-  cookie: {
-    maxAge: 60000
-  }
-}));
-
-//check if cookie still saved in browser
-app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
-    res.clearCookie('user_sid');
-  }
-  next();
-});
-
-//check if user is stil logged in
-var sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.user_sid) {
-    res.redirect("./view/mainpage.html");
-  } else {
-    next();
-  }
-};
-
+app.use('/api', router);
+app.use('/user', userRouter);
+app.use('/group', groupRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -76,7 +47,7 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
+
+
 app.listen(process.env.port || 3000);
-
-
 console.log('Webserver running at Port 3000');
