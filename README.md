@@ -1,10 +1,8 @@
 # s1-wichtelserver
 S1 Wichtelserver
 
-S1 Wichtelserver 
 
-
-Requirents:
+Requirements
 
 
 - npm install (frontend / backend)
