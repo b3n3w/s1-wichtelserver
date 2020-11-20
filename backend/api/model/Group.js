@@ -12,6 +12,10 @@ const GroupSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    entryKey: {
+        type: String,
+        required: ""
+    },
     groupmembers: [
         {
             type: mongoose.Schema.Types.ObjectId,
