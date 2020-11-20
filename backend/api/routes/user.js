@@ -6,9 +6,10 @@ var userController = require('../controller/userController');
 const auth = require("../../config/auth");
 
 
-router.get("/me", auth, userController.getUserDetails);
+router.get("/me", auth, userController.getUserProfile);
 router.get('/verify', userController.verifyUser);
 
+router.get('/groups', auth, userController.getUserGroups);
 
 router.post("/register", userController.registerNewUser);
 router.post("/login", userController.loginUser);

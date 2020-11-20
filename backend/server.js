@@ -14,8 +14,7 @@ InitiateMongoServer();
 
 const app = express();
 
-//Store all JS and CSS in Scripts folder.
-app.use(express.static(__dirname + '/frontend'));
+
 
 //registering cors
 app.use(cors());

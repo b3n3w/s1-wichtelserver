@@ -1,0 +1,17 @@
+"filename", "language", "JavaScript", "JSON", "comment", "blank", "total"
+"c:\tmp\Wichtelserver\backend\api\controller\groupController.js", "JavaScript", 62, 0, 1, 25, 88
+"c:\tmp\Wichtelserver\backend\api\controller\mailController.js", "JavaScript", 76, 0, 0, 15, 91
+"c:\tmp\Wichtelserver\backend\api\controller\userController.js", "JavaScript", 120, 0, 0, 20, 140
+"c:\tmp\Wichtelserver\backend\api\model\Group.js", "JavaScript", 24, 0, 0, 4, 28
+"c:\tmp\Wichtelserver\backend\api\model\Invation.js", "JavaScript", 16, 0, 0, 5, 21
+"c:\tmp\Wichtelserver\backend\api\model\User.js", "JavaScript", 85, 0, 2, 10, 97
+"c:\tmp\Wichtelserver\backend\api\routes\group.js", "JavaScript", 7, 0, 0, 4, 11
+"c:\tmp\Wichtelserver\backend\api\routes\router.js", "JavaScript", 12, 0, 2, 11, 25
+"c:\tmp\Wichtelserver\backend\api\routes\user.js", "JavaScript", 12, 0, 0, 8, 20
+"c:\tmp\Wichtelserver\backend\api\services\wichtelService.js", "JavaScript", 0, 0, 0, 1, 1
+"c:\tmp\Wichtelserver\backend\config\auth.js", "JavaScript", 14, 0, 0, 7, 21
+"c:\tmp\Wichtelserver\backend\config\db.js", "JavaScript", 19, 0, 0, 7, 26
+"c:\tmp\Wichtelserver\backend\package-lock.json", "JSON", 0, 2095, 0, 1, 2096
+"c:\tmp\Wichtelserver\backend\package.json", "JSON", 0, 34, 0, 1, 35
+"c:\tmp\Wichtelserver\backend\server.js", "JavaScript", 29, 0, 7, 16, 52
+"Total", "-", 476, 2129, 12, 135, 2752

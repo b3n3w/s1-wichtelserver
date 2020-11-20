@@ -13,18 +13,6 @@ Vue.prototype.$axios = Axios
 Vue.prototype.$jwt = VueJWT
 Vue.config.productionTip = false
 
-/*
-Vue.mixin({
-  methods: {
-    getUserDetails() {
-      let token = localStorage.getItem("jwt");
-      let decoded = VueJwtDecode.decode(token);
-      return decoded;
-    }
-  }
-});
-*/
-
 
 new Vue({
   router,

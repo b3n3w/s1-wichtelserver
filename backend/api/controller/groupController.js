@@ -35,7 +35,7 @@ exports.createGroup = async (req, res) => {
         //create new group and add Creator of Group to Members
         const group = new Group({
             groupname: req.body.name,
-            decription: req.body.description,
+            groupdescription: req.body.description,
             entryKey: entryKey,
             groupmembers: [creator]
 

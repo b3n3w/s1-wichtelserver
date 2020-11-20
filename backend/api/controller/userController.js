@@ -2,6 +2,7 @@ const User = require("../model/User");
 var nodemailer = require('../controller/mailController');
 const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
+const Group = require("../model/Group");
 
 
 exports.registerNewUser = async (req, res) => {
@@ -99,6 +100,43 @@ exports.verifyUser = async (req, res) => {
     }
 }
 
+
+exports.getUserProfile = async (req, res) => {
+
+    let user = await User.findById(req.userData._id);
+    const data = {
+        username: user.username,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        street: user.street,
+        city: user.city,
+        zip: user.zip,
+    }
+    res.json(data)
+}
 exports.getUserDetails = async (req, res) => {
     await res.json(req.userData);
 };
+
+
+exports.getUserGroups = async (req, res) => {
+
+    let userID = req.userData._id;
+    console.log(userID);
+
+    const data = [];
+    Group.find({ groupmembers: userID }).exec(function (err, groups) {
+
+        groups.forEach(group => {
+            const temp = {
+                groupname: group.groupname,
+                groupdescription: group.groupdescription,
+                members: group.groupmembers
+            }
+            data.push(temp);
+        });
+        res.json(data);
+    });
+}
+exports.getUsername
