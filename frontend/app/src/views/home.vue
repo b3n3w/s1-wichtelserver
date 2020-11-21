@@ -2,13 +2,18 @@
   <div>
     <Menu />
     <div v-for="group in groups" :key="group.groupname">
-      <group-card :groupname="group.groupname"> </group-card>
+      <group-card 
+      :groupId="group.groupId"
+      :usercount="group.usercount" 
+      :groupname="group.groupname"
+      :groupdescription="group.groupdescription"
+      >
+      </group-card>
     </div>
   </div>
 </template>
 <script>
 import Menu from "@/components/Menu";
-
 import GroupCard from "@/components/Card/GroupCard";
 
 //import jwt_decode from "jwt-decode";
@@ -33,11 +38,16 @@ export default {
       })
       .then((response) => {
         this.groups = response.data;
-        console.log(this.groups);
+        console.log(this.groups)
       });
   },
   methods: {},
 };
 </script>
 <style >
-</style>
+body {
+  background: bisque;
+}
+</style> >
+
+

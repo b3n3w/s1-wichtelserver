@@ -1,6 +1,6 @@
 <template>
   <div class="heading">
-    <h2>Sign In</h2>
+    <h2>Anmeldung</h2>
     <form action="#" @submit.prevent="loginUser">
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -25,9 +25,6 @@
       </div>
 
       <button class="float">Login</button>
-
-      Noch keinen Wichtelaccount anglegt?
-      <router-link to="/register">Registrieren</router-link>
     </form>
   </div>
 </template>
@@ -53,7 +50,7 @@ export default {
 
           if (token) {
             localStorage.setItem("jwt", token);
-            swal("Success", "Login Successful", "Error");
+            swal("Success", "Login Successful", "Success");
             if (response.data.firstLogin) {
               this.$router.push("/selectGroup");
             } else {

@@ -19,7 +19,7 @@ const GroupSchema = new mongoose.Schema({
     groupmembers: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'users'
+            ref: 'User'
         }
     ]
 })

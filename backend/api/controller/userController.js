@@ -123,20 +123,27 @@ exports.getUserDetails = async (req, res) => {
 exports.getUserGroups = async (req, res) => {
 
     let userID = req.userData._id;
-    console.log(userID);
-
     const data = [];
+
     Group.find({ groupmembers: userID }).exec(function (err, groups) {
 
         groups.forEach(group => {
+
             const temp = {
+                groupId: group._id,
                 groupname: group.groupname,
                 groupdescription: group.groupdescription,
-                members: group.groupmembers
+                members: group.groupmembers,
+                usercount: group.groupmembers.length
             }
             data.push(temp);
         });
+
+        console.log(data);
+
         res.json(data);
     });
 }
-exports.getUsername
+exports.getUsernamebyID = async (req, res) => {
+
+}

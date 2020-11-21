@@ -1,7 +1,7 @@
 const { ObjectID } = require("mongodb");
-const { update } = require("../model/Group");
 const Group = require("../model/Group");
 const User = require("../model/User");
+
 
 exports.addUsertoGroup = async (group, user) => {
 
@@ -60,7 +60,7 @@ exports.getGroupbyKey = async (req, res) => {
             })
         };
         const group = await Group.findOne({ entryKey: entryKey });
-       
+
         if (!group) {
             res.status(409).json({
                 message: "Keine Gruppe mit diesem Schlüssel gefunden"
@@ -69,7 +69,7 @@ exports.getGroupbyKey = async (req, res) => {
 
         let user = await User.findById(req.body.userID);
 
-        let tempUser = Group.find({"groupmembers":ObjectID(user._id)});
+        let tempUser = Group.find({ "groupmembers": ObjectID(user._id) });
 
         await Group.updateOne({ _id: group._id }, { $addToSet: { groupmembers: user._id } });
 
@@ -84,4 +84,14 @@ exports.getGroupbyKey = async (req, res) => {
 
 exports.getAllGroups = async (req, res) => {
 
+}
+
+exports.getGroupMembers = async (req, res) => {
+
+    if (req.params) {
+        Group.findOne({ _id: req.params.id })
+            .populate('groupmembers', 'username').json.exec((err, posts) => {
+              res.json(posts);
+            })
+    }
 }

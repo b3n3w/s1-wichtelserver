@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-container">
     <div class="container-fluid">
       <div class="heading_index">
         <h1>S1 Wichtelserver</h1>
@@ -48,8 +48,10 @@
     <keep-alive>
       <component v-bind:is="component"></component>
     </keep-alive>
-    <button v-on:click="component = 'login'">Show Login</button>
-    <button v-on:click="component = 'register'">Show Registration</button>
+    <button class="btn-component" v-on:click="component = 'login'">
+      Zum Login
+    </button>
+    <button v-on:click="component = 'register'">Zur Registrierung</button>
   </div>
 </template>
 
@@ -79,12 +81,15 @@ export default {
 }
 
 body {
-  background: url("../assets/image.jpeg");
-  -webkit-background-size: cover;
+  background-image: url("../assets/image.jpg");
+  background-position: center;
+  /*-webkit-background-size: cover;
   -moz-background-size: cover;
-  -o-background-size: cover;
+  -o-background-size: cover;*/
   background-repeat: no-repeat;
   background-size: cover;
+  width: 100vw;
+  height: 100vh;
   text-align: center;
 }
 
@@ -681,8 +686,6 @@ body {
   }
 }
 
-
-
 .heading_index h1 {
   margin: 10px;
   color: rgb(255, 255, 255);
@@ -693,14 +696,32 @@ input,
 button {
   font-family: "Source Sans Pro", sans-serif;
 }
-
-.login {
+.btn-component {
+  margin-top: 15px;
+  background: #32394f;
+  border: none;
+  font-size: 1em;
+  font-weight: 300;
+  padding: 3px 0;
+  width: 50%;
+  margin-top: 10;
+  border-radius: 10px;
+  color: white;
+}
+.login-container {
+  background-color: hsla(229, 22%, 10%, 0.424);
   padding: 15px;
   width: 400px;
+  border-radius: 32px;
+}
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
   min-height: 600px;
-  margin: 10% auto auto;
-  background-color: rgba(255, 255, 255, 0.247);
-  border-radius: 10px;
+  margin: auto auto;
 }
 
 .login .heading {
@@ -709,7 +730,7 @@ button {
 }
 
 .login .heading h2 {
-  font-size: 3em;
+  font-size: 2em;
   font-weight: 300;
   color: rgb(255, 255, 255);
   display: inline-block;
@@ -756,27 +777,28 @@ button {
   color: #ffffffe5;
 }
 
+.login input.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.849);
+}
+
 .login form input.form-control:focus {
   border: none;
 }
 
 .login form button {
   margin-top: 15px;
-  background: #27ae60;
+  background: #32394f;
   border: none;
   font-size: 1.4em;
   font-weight: 300;
   padding: 5px 0;
   width: 100%;
   border-radius: 10px;
-  color: #b3eecc;
-  border-bottom: 4px solid #1e8449;
+  color: rgb(255, 255, 255);
 }
 
 .login form button:hover {
-  background: #30b166;
-  -webkit-animation: hop 1s;
-  animation: hop 1s;
+  background: #404864e8;
 }
 
 .float {

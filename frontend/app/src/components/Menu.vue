@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <button @click="logoutUser()">Wichteln</button>
+    <img class="img-header" src="@/assets/s1_logo.png" />
     <div class="header-right">
       <button class="active" @click="gotoHome()">Wichteln</button>
       <button @click="showUserProfile()">Profil</button>
@@ -20,11 +20,11 @@ export default {
       this.$router.push("/");
     },
     showUserProfile() {
-      this.$router.push('/profile');
+      this.$router.push("/profile");
     },
-    gotoHome(){
-      this.$router.push('/home');
-    }
+    gotoHome() {
+      this.$router.push("/home");
+    },
   },
 };
 </script>
@@ -33,22 +33,26 @@ export default {
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
-  background-color: #f1f1f10c;
-  border-color: whitesmoke;
-  padding: 20px 10px;
+  background-color: hsla(229, 22%, 10%, 0.424);
+  padding: 10px 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Style the header links */
 .header button {
   float: left;
-  color: black;
   text-align: center;
   padding: 20px;
+  border: none;
+  outline: none;
   margin: 5px;
   text-decoration: none;
   font-size: 18px;
   line-height: 25px;
-  border-radius: 4px;
+  width: 100px;
+  border-radius: 32px;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: rgba(245, 222, 179, 0);
 }
 
@@ -58,15 +62,22 @@ export default {
   font-weight: bold;
 }
 
+.img-header {
+ max-width: 5%;
+ min-width: 4%;
+
+ float: left;
+ margin-left: 10px;
+}
 /* Change the background color on mouse-over */
 .header button:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: rgba(255, 255, 255, 0.137);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Style the active/current link*/
 .header button.active {
-  background-color: rgb(85, 16, 45);
+  background-color: #32394f;
   color: white;
 }
 
