@@ -7,11 +7,20 @@
           <div class="col-md-6 ml-auto mr-auto">
             <div class="profile">
               <div class="avatar">
+                <img  />
                 <img
-                  src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg"
+                  v-bind:src="'data:image/jpeg;base64,'+imageBase64"
                   alt="Circle Image"
-                  class="img-raised rounded-circle img-fluid"
+                  class="profile-img"
                 />
+                <input
+                  @change="handleImage"
+                  class="custom-input"
+                  type="file"
+                  id="imgupload"
+                  accept="image/*"
+                />
+                
               </div>
               <div class="name">
                 <h3 class="title">{{ user.username }}</h3>
@@ -39,12 +48,13 @@
 </template>
 <script>
 import Menu from "@/components/Menu";
-//import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 export default {
   data() {
     return {
       user: {},
+      imageBase64: ""
     };
   },
   components: {
@@ -59,9 +69,36 @@ export default {
       })
       .then((response) => {
         this.user = response.data;
+        this.imageBase64 = this.user.img
+  
       });
   },
-  methods: {},
+  methods: {
+    handleImage(e) {
+      const selectedImage = e.target.files[0]; // get first file
+      this.createBase64Image(selectedImage);
+    },
+    createBase64Image(fileObject) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.image = e.target.result;
+        this.uploadImage();
+      };
+      reader.readAsDataURL(fileObject);
+    },
+    uploadImage() {
+      const { image } = this;
+      let uID = jwt_decode(localStorage.getItem("jwt"))._id;
+      this.$axios
+        .post("/upload", { image: image, uID: uID })
+        .then((response) => {
+          this.remoteUrl = response.data.url;
+        })
+        .catch((err) => {
+          return new Error(err.message);
+        });
+    },
+  },
 };
 </script>
 <style >
@@ -73,8 +110,11 @@ export default {
   margin-left: 10%;
   margin-right: 10%;
 }
-.img-raised {
-  width: 30%;
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 32%
+
 }
 .title {
   color: white;
@@ -84,10 +124,12 @@ export default {
   padding-bottom: 10px;
   padding-top: 10px;
 }
-.userinformation-heading{
-  color:rgba(245, 245, 245, 0.493);
+.userinformation-heading {
+  color: rgba(245, 245, 245, 0.493);
 }
 .userinformation {
   color: rgba(255, 255, 255, 0.657);
 }
+
+
 </style>

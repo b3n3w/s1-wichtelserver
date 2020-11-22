@@ -48,7 +48,11 @@ const UserSchema = new mongoose.Schema({
                 required: true
             }
         }
-    ]
+    ],
+    profileImage: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Image'
+    }
 });
 
 

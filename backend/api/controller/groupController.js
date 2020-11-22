@@ -1,7 +1,7 @@
 const { ObjectID } = require("mongodb");
 const Group = require("../model/Group");
 const User = require("../model/User");
-
+var fs = require('fs');
 
 exports.addUsertoGroup = async (group, user) => {
 
@@ -90,7 +90,8 @@ exports.getAllGroups = async (req, res) => {
 
 exports.getGroupMembers = async (req, res) => {
     let groupId = req.params.id;
-   
+    let userId = req.query.uID
+
     if (groupId === undefined) {
         return res.send("No Group Param");
     }
@@ -106,12 +107,35 @@ exports.getGroupMembers = async (req, res) => {
                     }
                     let members = [];
                     let data = [];
+                    var imageAsBase64 = "";
                     posts.groupmembers.forEach(element => {
-                        members.push({ username: element.username })
-                    });
+                        fs.access(__dirname + '../../../uploads/' + element._id + ".jpg", fs.F_OK, (err) => {
+                            if (err) {
+                                imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/test.jpg', 'base64');
+                                members.push({
+                                    username: element.username,
+                                    image: imageAsBase64
+                                })
+                                
+                                console.error(err)
+                            } else {
+                                members.push({
+                                    username: element.username,
+                                    image: imageAsBase64
+                                })
+                            }
+                        })
+                    })
+
+                    let user = false;
+                    if (posts.groupmembers[0]._id == userId) {
+                        user = true;
+                    }
+
                     data.push({
                         groupmembers: members,
-                        groupstatus: posts.wichtelStart
+                        groupstatus: posts.wichtelStart,
+                        userPerm: user
                     });
                     res.json(data);
                 })

@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const Group = require("../model/Group");
 
+var fs = require('fs');
+
 
 exports.registerNewUser = async (req, res) => {
 
@@ -68,6 +70,9 @@ exports.changeUserPasswort = async (req, res) => {
 
 
 }
+
+
+
 exports.verifyUser = async (req, res) => {
 
     token = req.query.id;
@@ -101,9 +106,13 @@ exports.verifyUser = async (req, res) => {
 }
 
 
-exports.getUserProfile = async (req, res) => {
 
-    let user = await User.findById(req.userData._id);
+exports.getUserProfile = async (req, res) => {
+    let userID = req.userData._id
+    let user = await User.findById(userID);
+
+    var imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/'+userID+".jpg", 'base64');
+
     const data = {
         username: user.username,
         firstname: user.firstname,
@@ -112,12 +121,17 @@ exports.getUserProfile = async (req, res) => {
         street: user.street,
         city: user.city,
         zip: user.zip,
+        img: imageAsBase64
     }
     res.json(data)
 }
+
+
 exports.getUserDetails = async (req, res) => {
     await res.json(req.userData);
 };
+
+
 
 
 exports.getUserGroups = async (req, res) => {

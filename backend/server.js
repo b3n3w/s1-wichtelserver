@@ -8,6 +8,8 @@ var router = require('./api/routes/router');
 var userRouter = require('./api/routes/user')
 var groupRouter = require('./api/routes/group')
 var giftRouter = require('./api/routes/gift')
+var uploadRouter = require('./api/routes/upload')
+
 
 // Initiate Mongo DB Server Connection
 InitiateMongoServer();
@@ -25,14 +27,17 @@ app.use(morgan("dev"));
 
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(express.json());
 
 app.use('/api', router);
 app.use('/user', userRouter);
 app.use('/group', groupRouter);
 app.use('/gift', giftRouter)
+app.use('/upload', uploadRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

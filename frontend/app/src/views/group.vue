@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <button @click="startWichteln()">Starte Wichteln</button>
+    <button v-show="userstatus" @click="startWichteln()">Starte Wichteln</button>
   </div>
 </template>
 
@@ -23,11 +23,13 @@
 import Menu from "@/components/Menu";
 import MemberCard from "../components/Card/MemberCard.vue";
 import swal from "sweetalert";
+import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
       memberlist: [],
       groupstatus: "Gruppen status",
+      userstatus: false
     };
   },
   components: {
@@ -58,25 +60,29 @@ export default {
   },
   created() {
     console.log(this.groupId);
-
+    let uID = jwt_decode(localStorage.getItem("jwt"))._id;
     if (this.groupId) {
       this.$axios
         .get("/group/" + this.groupId, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
+          params: {
+            uID: uID
+          }
         })
         .then((response) => {
           console.log(response.data);
           this.memberlist = response.data[0].groupmembers;
+          this.userstatus = response.data[0].userPerm;
           if (!response.data[0].groupstatus) {
             this.groupstatus = "Das Wichteln wurde noch nicht gestartet";
           } else {
             this.groupstatus = "Das Wichteln wurde gestartet ! <3";
           }
         });
-    }else{
-      this.$router.push('home')
+    } else {
+      this.$router.push("home");
     }
   },
 };
