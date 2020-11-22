@@ -89,12 +89,20 @@ export default {
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header button {
-    float: none;
+    float: left;
     display: block;
     text-align: left;
+    padding: 10px;
+    text-align: center;
   }
   .header-right {
     float: none;
+  }
+  .img-header{
+    float: left;
+    margin-top: 5px;
+    margin-right: 20px;
+    max-width: 10%;
   }
 }
 </style>

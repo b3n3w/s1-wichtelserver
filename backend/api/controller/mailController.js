@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const User = require("../model/User");
 
 const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
 const testmessage = {
@@ -88,4 +89,26 @@ const testmail = (req, res) => {
     });
 }
 
-module.exports = sendAccountVerify;
+
+const sendWichtelMails = async (group) => {
+    var wichtelMessage = "";
+  
+    console.log(group);
+    group.forEach((value, key) => {
+       
+      
+        console.log(value.email);
+        console.log(key.email);
+        wichtelMessage = {
+            from: sender,
+            to: "",
+            subject: 'Willkommen beim alljährlichen S1-Wichteln! ',
+            text: 'Hallo lieber Wichtel !, meine Name ist Shanti die Wichtelfee und ich darf dich herzlichst beim diesjährigen S1 Wichteln begrüßen',
+            html: '<b> Hallo lieber Wichtel !,</b><br>  meine Name ist Shanti die Wichtelfee und ich darf dich herzlichst beim diesjährigen S1 Wichteln begrüßen'
+        };
+    });
+}
+module.exports = {
+    sendAccountVerify: sendAccountVerify,
+    sendWichtelMails: sendWichtelMails
+}

@@ -48,10 +48,11 @@
     <keep-alive>
       <component v-bind:is="component"></component>
     </keep-alive>
-    <button class="btn-component" v-on:click="component = 'login'">
-      Zum Login
+    <div class="container-index">
+    <button class="btn-component-index" v-on:click="component = 'login'"> Zum Login
     </button>
-    <button v-on:click="component = 'register'">Zur Registrierung</button>
+    <button class="btn-component-index" v-on:click="component = 'register'">Zur Registrierung</button>
+    </div>
   </div>
 </template>
 

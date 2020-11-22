@@ -635,6 +635,21 @@
     border-radius: 10px;
     color: white;
   }
+ .container-index{
+  margin-top: 20px;
+  float: left;
+ }
+  .btn-component-index {
+    margin-top: 10px;
+    background: #32394f85;
+    border: none;
+    font-size: 20px;
+    padding: 2px 0;
+    width: 100%;
+    margin-left: 25%;
+    border-radius: 32px;
+    color: white;
+  }
   .login-container {
     background-color: hsla(229, 22%, 10%, 0.424);
     padding: 15px;
@@ -712,6 +727,9 @@
     border: none;
   }
   
+  .container-index{
+    float: left;
+  }
   .login form button {
     margin-top: 15px;
     background: #32394f;
@@ -720,7 +738,7 @@
     font-weight: 300;
     padding: 5px 0;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 32px;
     color: rgb(255, 255, 255);
   }
   
@@ -737,6 +755,7 @@
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    border-radius: 32px;
   }
   
   .float:hover,

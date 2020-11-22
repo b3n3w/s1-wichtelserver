@@ -9,7 +9,7 @@
           id="username"
           class="form-control"
           placeholder="Benutzername"
-          v-model="register.username"
+          v-model="username"
           required
         />
       </div>
@@ -20,7 +20,7 @@
           id="password"
           class="form-control"
           placeholder="Passwort"
-          v-model="register.password"
+          v-model="password"
           required
         />
       </div>
@@ -31,7 +31,7 @@
           id="firstname"
           class="form-control"
           placeholder="Vorname"
-          v-model="register.firstname"
+          v-model="firstname"
           required
         />
       </div>
@@ -41,7 +41,7 @@
           type="text"
           class="form-control"
           placeholder="Nachname"
-          v-model="register.lastname"
+          v-model="lastname"
           required
         />
       </div>
@@ -51,9 +51,10 @@
           type="text"
           class="form-control"
           placeholder="Email"
-          v-model="register.email"
+          v-model="email"
           required
         />
+        <span class="error" v-if="msg.email">{{ msg.email }}</span>
       </div>
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
@@ -61,7 +62,7 @@
           type="street"
           class="form-control"
           placeholder="Straße"
-          v-model="register.street"
+          v-model="street"
           required
         />
       </div>
@@ -71,7 +72,7 @@
           type="city"
           class="form-control"
           placeholder="Stadt"
-          v-model="register.city"
+          v-model="city"
           required
         />
       </div>
@@ -81,17 +82,13 @@
           type="zip"
           class="form-control"
           placeholder="PLZ"
-          v-model="register.zip"
+          v-model="zip"
           required
         />
+        <span class="error" v-if="msg2.zip">{{ msg2.zip }}</span>
       </div>
 
       <button class="float" type="submit">Registrieren</button>
-
-      <p class="p_login">
-        Bereits einen Account anglegt?
-        <router-link to="/">Login</router-link>
-      </p>
     </form>
   </div>
 </template>
@@ -102,33 +99,71 @@ import swal from "sweetalert";
 export default {
   data() {
     return {
-      register: {
-        username: "",
-        password: "",
-        firstname: "",
-        lastname: "",
-        email: "",
-        street: "",
-        city: "",
-        zip: "",
-      },
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      street: "",
+      city: "",
+      zip: "",
+      msg: [],
+      msg2: []
     };
   },
+  watch: {
+    email(value) {
+      // binding this to the data value in the email input
+      this.email = value;
+      this.validateEmail(value);
+    },
+    zip(value) {
+      this.zip = value;
+      this.validateZip(value);
+    },
+  },
   methods: {
+    validateEmail(value) {
+      if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+        this.msg["email"] = "";
+      } else {
+        this.msg["email"] = "Invalid Email Address";
+      }
+    },
+    validateZip(value) {
+      if (/(^\d{5}$)/.test(value)) {
+        this.msg2["zip"] = "";
+      } else {
+        this.msg2["zip"] = "Invalid PLZ";
+      }
+    },
     async registerUser() {
-      this.$axios.post("/user/register", this.register).then(
+      let register = {
+        username: this.username,
+        password: this.password,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        street: this.street,
+        city: this.city,
+        zip: this.zip,
+      };
+      this.$axios.post("/user/register", register).then(
         (response) => {
           console.log(response);
           let token = response.data.token;
           if (token) {
             localStorage.setItem("jwt", token);
+            swal(
+              "JUHU",
+              "Registrierung erfolgreich!\nBitte verifiziere deine E-Mail Adresse",
+              "success"
+            );
             this.$router.push("/");
-            swal("Success", "Registration Was successful", "success");
           }
-         
         },
         (error) => {
-           if (error.status == 409) {
+          if (error.status == 409) {
             swal("Error", error.data.message, "error");
           } else {
             swal("Error", error.data.err.message, "error");
@@ -139,3 +174,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error {
+  color: red;
+}
+</style>

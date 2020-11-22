@@ -10,8 +10,11 @@
           class="col-md-8"
           v-for="member in memberlist"
           :key="member.username"
+          
         >
-          <member-card :username="member.username"> </member-card>
+          <member-card 
+          :image="member.image"
+          :username="member.username"> </member-card>
         </div>
       </div>
     </div>

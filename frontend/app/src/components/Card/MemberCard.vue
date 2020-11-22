@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-2 col-sm-2">
       <img
-        src="https://bootdey.com/img/Content/avatar/avatar7.png"
+        v-bind:src="'data:image/jpeg;base64,'+image"
         alt="user"
         class="profile-photo-lg"
       />
@@ -21,13 +21,16 @@ export default {
   name: "member-card",
   props: {
     username: String,
+    image: String
   },
 };
 </script>
 <style scoped>
 .profile-photo-lg {
-  width: 60%;
+  width: 100%;
   border-radius: 50%;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .row {
@@ -38,12 +41,13 @@ export default {
 .btn-primary{
   background: #757CA3;
   border: none;
-  border-radius: 32px;}
+  border-radius: 32px;
+  
+  }
 
-  .btn-primary:hover{
+
+.btn-primary:hover{
   background: #424763;
- 
-
 }
 
 
@@ -79,7 +83,7 @@ export default {
 
 @media only screen and (max-width: 480px) {
 .profile-photo-lg {
-  width: 10%;
+  width: 20%;
   border-radius: 50%;
 }
 .btn-primary {

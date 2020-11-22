@@ -50,8 +50,7 @@ const UserSchema = new mongoose.Schema({
         }
     ],
     profileImage: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Image'
+        type: Boolean
     }
 });
 

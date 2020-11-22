@@ -100,31 +100,30 @@ exports.getGroupMembers = async (req, res) => {
     } else {
         if (req.params) {
             console.log(req.params.id)
-            Group.findOne({ _id: groupId })
-                .populate('groupmembers', 'username').exec(function (err, posts) {
+            Group.findOne({ _id: groupId }).
+                populate({ path: "groupmembers", model: "User" })
+                .exec(function (err, posts) {
                     if (err) {
                         console.log(err);
                     }
                     let members = [];
                     let data = [];
+
+                    console.log(posts);
                     var imageAsBase64 = "";
                     posts.groupmembers.forEach(element => {
-                        fs.access(__dirname + '../../../uploads/' + element._id + ".jpg", fs.F_OK, (err) => {
-                            if (err) {
-                                imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/test.jpg', 'base64');
-                                members.push({
-                                    username: element.username,
-                                    image: imageAsBase64
-                                })
-                                
-                                console.error(err)
-                            } else {
-                                members.push({
-                                    username: element.username,
-                                    image: imageAsBase64
-                                })
-                            }
+                        console.log(element.profileImage)
+                        if (element.profileImage == true) {
+                            imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/' + element._id + ".jpg", 'base64');
+
+                        } else {
+                            imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/test.jpg', 'base64');
+                        }
+                        members.push({
+                            username: element.username,
+                            image: imageAsBase64
                         })
+
                     })
 
                     let user = false;
