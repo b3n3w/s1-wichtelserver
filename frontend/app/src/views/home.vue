@@ -6,6 +6,7 @@
       :groupId="group.groupId"
       :usercount="group.usercount" 
       :groupname="group.groupname"
+      :groupstatus="group.groupstatus"
       :groupdescription="group.groupdescription"
       >
       </group-card>

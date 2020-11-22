@@ -4,7 +4,7 @@
 
     <input v-model="data.groupKey" type="text" />
     <div>
-      <button @click="enterGroup()">Bestehender Gruppe beitreten</button>
+      <button class="btn-component" @click="enterGroup()">Bestehender Gruppe beitreten</button>
     </div>
     <div>
       <button @click="createGroup()">Neue Wichtel Gruppe erstellen</button>

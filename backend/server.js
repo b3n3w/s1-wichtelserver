@@ -7,6 +7,7 @@ var dotenv = require('dotenv').config();
 var router = require('./api/routes/router');
 var userRouter = require('./api/routes/user')
 var groupRouter = require('./api/routes/group')
+var giftRouter = require('./api/routes/gift')
 
 // Initiate Mongo DB Server Connection
 InitiateMongoServer();
@@ -20,17 +21,18 @@ const app = express();
 app.use(cors());
 
 // configire morgan
-app.use(morgan("dev")); 
+app.use(morgan("dev"));
 
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api', router);
 app.use('/user', userRouter);
 app.use('/group', groupRouter);
+app.use('/gift', giftRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

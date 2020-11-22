@@ -1,8 +1,8 @@
 <template>
   <div class="header">
-    <img class="img-header" src="@/assets/s1_logo.png" />
+    <img class="img-header" @click="gotoHome()" src="@/assets/s1_logo.png" />
     <div class="header-right">
-      <button class="active" @click="gotoHome()">Wichteln</button>
+      <button class="active" @click="gotoHome()">Home</button>
       <button @click="showUserProfile()">Profil</button>
       <button @click="logoutUser()">Logout</button>
     </div>

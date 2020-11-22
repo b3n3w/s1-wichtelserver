@@ -134,6 +134,7 @@ exports.getUserGroups = async (req, res) => {
                 groupname: group.groupname,
                 groupdescription: group.groupdescription,
                 members: group.groupmembers,
+                groupstatus: group.wichtelStart,
                 usercount: group.groupmembers.length
             }
             data.push(temp);

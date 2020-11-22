@@ -1,0 +1,47 @@
+Date : 2020-11-22 13:03:25
+Directory : c:\tmp\Wichtelserver\backend
+Total : 17 files,  2693 codes, 22 comments, 161 blanks, all 2876 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |      2,129 |          0 |          2 |      2,131 |
+| JavaScript |         15 |        564 |         22 |        159 |        745 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                           | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                              |         17 |      2,693 |         22 |        161 |      2,876 |
+| api                                                            |         12 |        500 |         15 |        129 |        644 |
+| api\controller                                                 |          4 |        316 |         11 |         82 |        409 |
+| api\model                                                      |          4 |        146 |          2 |         23 |        171 |
+| api\routes                                                     |          4 |         38 |          2 |         24 |         64 |
+| config                                                         |          2 |         33 |          0 |         14 |         47 |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                       | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\tmp\Wichtelserver\backend\api\controller\giftController.js  | JavaScript |         42 |         10 |         13 |         65 |
+| c:\tmp\Wichtelserver\backend\api\controller\groupController.js | JavaScript |         73 |          1 |         30 |        104 |
+| c:\tmp\Wichtelserver\backend\api\controller\mailController.js  | JavaScript |         76 |          0 |         15 |         91 |
+| c:\tmp\Wichtelserver\backend\api\controller\userController.js  | JavaScript |        125 |          0 |         24 |        149 |
+| c:\tmp\Wichtelserver\backend\api\model\Gift.js                 | JavaScript |         21 |          0 |          4 |         25 |
+| c:\tmp\Wichtelserver\backend\api\model\Group.js                | JavaScript |         24 |          0 |          4 |         28 |
+| c:\tmp\Wichtelserver\backend\api\model\Invitation.js           | JavaScript |         16 |          0 |          5 |         21 |
+| c:\tmp\Wichtelserver\backend\api\model\User.js                 | JavaScript |         85 |          2 |         10 |         97 |
+| c:\tmp\Wichtelserver\backend\api\routes\gift.js                | JavaScript |          6 |          0 |          2 |          8 |
+| c:\tmp\Wichtelserver\backend\api\routes\group.js               | JavaScript |          8 |          0 |          3 |         11 |
+| c:\tmp\Wichtelserver\backend\api\routes\router.js              | JavaScript |         12 |          2 |         11 |         25 |
+| c:\tmp\Wichtelserver\backend\api\routes\user.js                | JavaScript |         12 |          0 |          8 |         20 |
+| c:\tmp\Wichtelserver\backend\config\auth.js                    | JavaScript |         14 |          0 |          7 |         21 |
+| c:\tmp\Wichtelserver\backend\config\db.js                      | JavaScript |         19 |          0 |          7 |         26 |
+| c:\tmp\Wichtelserver\backend\package-lock.json                 | JSON       |      2,095 |          0 |          1 |      2,096 |
+| c:\tmp\Wichtelserver\backend\package.json                      | JSON       |         34 |          0 |          1 |         35 |
+| c:\tmp\Wichtelserver\backend\server.js                         | JavaScript |         31 |          7 |         16 |         54 |
+| Total                                                          |            |      2,693 |         22 |        161 |      2,876 |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+

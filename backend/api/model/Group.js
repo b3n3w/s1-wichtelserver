@@ -8,6 +8,10 @@ const GroupSchema = new mongoose.Schema({
         unique: true,
         required: true,
     },
+    wichtelStart:{
+        type: Boolean,
+        default: false,
+    },
     groupdescription: {
         type: String,
         default: ""

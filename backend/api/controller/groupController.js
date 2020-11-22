@@ -73,12 +73,12 @@ exports.getGroupbyKey = async (req, res) => {
 
         await Group.updateOne({ _id: group._id }, { $addToSet: { groupmembers: user._id } });
 
-        res.status(201).send({
+        return res.status(201).send({
             message: "Gruppe beigetreten"
         });
 
     } catch (error) {
-        res.status(400).json({ error: error });
+        return res.status(400).json({ error: error });
     }
 }
 
@@ -86,12 +86,40 @@ exports.getAllGroups = async (req, res) => {
 
 }
 
-exports.getGroupMembers = async (req, res) => {
 
-    if (req.params) {
-        Group.findOne({ _id: req.params.id })
-            .populate('groupmembers', 'username').json.exec((err, posts) => {
-              res.json(posts);
-            })
+
+exports.getGroupMembers = async (req, res) => {
+    let groupId = req.params.id;
+   
+    if (groupId === undefined) {
+        return res.send("No Group Param");
+    }
+    if (groupId === "") {
+        return res.send("No Group Param");
+    } else {
+        if (req.params) {
+            console.log(req.params.id)
+            Group.findOne({ _id: groupId })
+                .populate('groupmembers', 'username').exec(function (err, posts) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    let members = [];
+                    let data = [];
+                    posts.groupmembers.forEach(element => {
+                        members.push({ username: element.username })
+                    });
+                    data.push({
+                        groupmembers: members,
+                        groupstatus: posts.wichtelStart
+                    });
+                    res.json(data);
+                })
+        } else {
+            return res.status(409).send();
+        }
     }
 }
+
+
+
