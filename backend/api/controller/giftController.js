@@ -1,7 +1,6 @@
 const Group = require("../model/Group");
 const Gift = require("../model/Gift");
 const User = require("../model/User");
-const { updateOne } = require("../model/Group");
 var nodemailer = require('../controller/mailController');
 
 
@@ -66,8 +65,9 @@ exports.startWichteln = async (req, res) => {
             })
 
             updateGroup(groupId);
-            sendMails(map)
-            return res.status(201).send(map)
+            
+           res.status(201).send(map)
+           sendMails(map)
         })
 }
 async function sendMails(group){

@@ -17,5 +17,5 @@ const InvitationSchema = new mongoose.Schema({
 
 
 
-const Invitation = mongoose.model("User", InvitationSchema);
+const Invitation = mongoose.model("Invitation", InvitationSchema);
 module.exports = Invitation;

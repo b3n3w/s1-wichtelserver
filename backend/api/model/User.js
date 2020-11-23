@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
     ],
     profileImage: {
         type: Boolean
-    }
+    },
 });
 
 
@@ -80,6 +80,18 @@ UserSchema.methods.generateAuthToken = async function () {
     await user.save();
     return token;
 };
+
+
+
+UserSchema.methods.generateChatToken = async function(chatID){
+    const user = this;
+    const chatToken = jwt.sign(
+        {
+            _id: chatID, 
+        }
+    )
+
+}
 
 //this method search for a user by username and password.
 UserSchema.statics.findByCredentials = async (username, password) => {

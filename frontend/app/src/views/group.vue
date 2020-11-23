@@ -4,6 +4,7 @@
     <div class="groupstatus">
       <h3>{{ groupstatus }}</h3>
     </div>
+    <button class="btn-start" v-show="userstatus" @click="startWichteln()">Starte Wichteln</button>
     <div class="container">
       <div class="row">
         <div
@@ -18,7 +19,7 @@
         </div>
       </div>
     </div>
-    <button v-show="userstatus" @click="startWichteln()">Starte Wichteln</button>
+    
   </div>
 </template>
 
@@ -48,7 +49,12 @@ export default {
     startWichteln() {
       this.$axios.post("/gift/startWichteln", { groupId: this.groupId }).then(
         (response) => {
-          console.log(response);
+           if (response.status === 201) {
+             swal({
+              title: "WUHU",
+              text: "Die Verlosung wurde gestartet! Alle Wichtel erhalten nun ihre Partner per E-Mail",
+            });
+            } 
         },
         (error) => {
           if (error.response.status === 403) {
@@ -95,6 +101,14 @@ export default {
   margin-top: 10px;
 }
 
+.btn-start{
+  background-color: #32394f;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius:32px 
+
+}
 .groupstatus {
   margin-bottom: 10px;
 }

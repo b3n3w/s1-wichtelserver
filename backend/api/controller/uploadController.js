@@ -1,5 +1,5 @@
 const upload = require("../middleware/fileupload");
-var imgModel = require('../model/Image');
+
 var fs = require('fs');
 var path = require('path');
 const base64Img = require('base64-img');
