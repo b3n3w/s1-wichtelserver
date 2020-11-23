@@ -2,6 +2,7 @@ const { ObjectID } = require("mongodb");
 const Group = require("../model/Group");
 const User = require("../model/User");
 var fs = require('fs');
+var path = require('path');
 
 exports.addUsertoGroup = async (group, user) => {
 
@@ -114,10 +115,11 @@ exports.getGroupMembers = async (req, res) => {
                     posts.groupmembers.forEach(element => {
                         console.log(element.profileImage)
                         if (element.profileImage == true) {
-                            imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/' + element._id + ".jpg", 'base64');
+                           
+                            imageAsBase64 = fs.readFileSync(path.join(__dirname + '..','..','..','uploads/'+element._id+".jpg"), 'base64');
 
                         } else {
-                            imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/test.jpg', 'base64');
+                            imageAsBase64 = fs.readFileSync(path.join(__dirname + '..','..','..','uploads/test.jpg'), 'base64');
                         }
                         members.push({
                             username: element.username,

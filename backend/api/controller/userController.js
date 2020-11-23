@@ -3,7 +3,7 @@ var nodemailer = require('../controller/mailController');
 const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const Group = require("../model/Group");
-
+var path = require('path');
 var fs = require('fs');
 
 
@@ -111,7 +111,7 @@ exports.getUserProfile = async (req, res) => {
     let userID = req.userData._id
     let user = await User.findById(userID);
 
-    var imageAsBase64 = fs.readFileSync(__dirname + '../../../uploads/'+userID+".jpg", 'base64');
+    var imageAsBase64 = fs.readFileSync(path.join(__dirname + '..','..','..','uploads/'+userID+".jpg"), 'base64');
 
     const data = {
         username: user.username,

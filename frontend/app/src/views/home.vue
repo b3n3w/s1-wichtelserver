@@ -1,7 +1,7 @@
 <template>
   <div>
     <Menu />
-    <div v-for="group in groups" :key="group.groupname">
+    <div transition="expand" v-for="group in groups" :key="group.groupname">
       <group-card 
       :groupId="group.groupId"
       :usercount="group.usercount" 
@@ -48,6 +48,14 @@ export default {
 <style >
 body {
   background: bisque;
+}
+
+.expand-transition {
+  transition: all 10s ease;
+  height: 30px;
+  padding: 10px;
+  background-color: #eee;
+  overflow: hidden;
 }
 </style> >
 

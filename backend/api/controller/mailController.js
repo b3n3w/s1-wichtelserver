@@ -92,21 +92,27 @@ const testmail = (req, res) => {
 
 const sendWichtelMails = async (group) => {
     var wichtelMessage = "";
-  
+
     console.log(group);
-    group.forEach((value, key) => {
-       
-      
-        console.log(value.email);
-        console.log(key.email);
+    for (const pair of group) {
+        let wichtel = await User.findById(pair[0]._id);
+        let receiver = await User.findById(pair[1]._id);
+
         wichtelMessage = {
             from: sender,
-            to: "",
-            subject: 'Willkommen beim alljährlichen S1-Wichteln! ',
-            text: 'Hallo lieber Wichtel !, meine Name ist Shanti die Wichtelfee und ich darf dich herzlichst beim diesjährigen S1 Wichteln begrüßen',
-            html: '<b> Hallo lieber Wichtel !,</b><br>  meine Name ist Shanti die Wichtelfee und ich darf dich herzlichst beim diesjährigen S1 Wichteln begrüßen'
+            to: wichtel.email,
+            subject: 'Die Verlosung hat begonnen ! <3',
+            text: 'Hallo lieber Wichtel !, In diesem Jahr darfst du den lieben Wichtel '  + receiver.usernamename + ' beschenken! Ich wünsche dir viel Spaß!',
+            html: '<b> Hallo lieber Wichtel !,</b><br>  In diesem Jahr darfst du den lieben Wichtel ' + receiver.username + ' beschenken! Ich wünsche dir viel Spaß!'
         };
-    });
+
+        await transport.sendMail(wichtelMessage, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message sent: %s', info.messageId);
+        });
+    }
 }
 module.exports = {
     sendAccountVerify: sendAccountVerify,
