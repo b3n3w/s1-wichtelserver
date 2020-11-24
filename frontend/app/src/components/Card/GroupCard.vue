@@ -2,7 +2,7 @@
   <div class="card" style="width: 20rem">
     <div class="avatar">
       <img
-        src="https://porta.imgix.net/medias/sys_porta/images/h4b/he6/weihnachtsglanz-by-casanova-deko-wichtel-stille-nacht-i-35-cm-1200x1200-0140565.04-0.jpg?auto=format&ar=1%3A1&fit=crop&ixlib=react-9.0.2&h=1134&w=1134"
+       v-bind:src="'data:image/jpeg;base64,'+groupimage"
         alt="Circle Image"
         class="img-card"
       />
@@ -37,7 +37,7 @@ export default {
     usercount: Number,
     groupstatus: Boolean,
     groupdescription: String,
-    imgSrc: String,
+    groupimage: String,
   },
   computed: {
     style() {

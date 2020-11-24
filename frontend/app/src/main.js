@@ -7,6 +7,7 @@ import '@/assets/css/main.css'
 import Axios from 'axios';
 
 import VueJWT from 'vuejs-jwt'
+import vuetify from './plugins/vuetify';
 
 Axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT;
 
@@ -20,7 +21,8 @@ new Vue({
   Axios,
   Vuex,
   VueJWT,
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
 
 

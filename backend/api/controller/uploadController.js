@@ -10,8 +10,7 @@ var sharp = require('sharp')
 
 
 exports.uploadImage = async (req, res) => {
-   var image = req.body.image;
-
+    var image = req.body.image;
 
     image = await resizeBase64(image);
 
@@ -29,11 +28,24 @@ exports.uploadImage = async (req, res) => {
     });
 };
 
-async function resizeBase64  ( base64Image, maxHeight = 640, maxWidth = 640 ) {
+exports.uploadGroupImage = async (base64Image, groupID) => {
+    var image = "data:image/jpeg;base64,"+ base64Image;
+   image = await resizeBase64(image);
+
+    base64Img.img(image, __dirname + '../../../uploads/', groupID, function (err, filepath) {
+        const pathArr = filepath.split('/')
+        const fileName = groupID;
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
+async function resizeBase64(base64Image, maxHeight = 640, maxWidth = 640) {
+
     const destructImage = base64Image.split(";");
     const mimType = destructImage[0].split(":")[1];
     const imageData = destructImage[1].split(",")[1];
-
     try {
         let resizedImage = Buffer.from(imageData, "base64")
         resizedImage = await sharp(resizedImage).resize(maxHeight, maxWidth).toBuffer()

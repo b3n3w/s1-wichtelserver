@@ -24,22 +24,8 @@ const routes = [
     name: "profile",
     component: () => import("../views/profile.vue")
   },
-  {
-    path: "/selectGroup",
-    name: "selectGroup",
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import("../components/selectGroup.vue")
-  },
-  {
-    path: "/createGroup",
-    name: "createGroup",
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import("../components/createGroup.vue")
-  }, {
+
+ {
     path: "/group",
     name: "group",
     meta: {
@@ -47,7 +33,12 @@ const routes = [
     },
     props: true,
     component: () => import("../views/group.vue")
+  },{
+    path: "/setup",
+    name: "setup",
+    component: () => import ("../views/setup.vue")
   }
+
 ];
 
 const router = new VueRouter({

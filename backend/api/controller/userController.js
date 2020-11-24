@@ -32,7 +32,7 @@ exports.registerNewUser = async (req, res) => {
 
         let data = await user.save();
         const token = await user.generateAuthToken();
-        nodemailer(user);
+        nodemailer.sendAccountVerify(user);
         res.status(201).json({ data, token });
 
     } catch (err) {
@@ -178,20 +178,23 @@ exports.getUserGroups = async (req, res) => {
     Group.find({ groupmembers: userID }).exec(function (err, groups) {
 
         groups.forEach(group => {
+            try {
 
+                var imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/' + group._id + ".jpg"), 'base64');
+            } catch {
+                imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/group.jpg'), 'base64');
+            }
             const temp = {
                 groupId: group._id,
                 groupname: group.groupname,
                 groupdescription: group.groupdescription,
                 members: group.groupmembers,
                 groupstatus: group.wichtelStart,
-                usercount: group.groupmembers.length
+                usercount: group.groupmembers.length,
+                groupimage: imageAsBase64
             }
             data.push(temp);
         });
-
-        console.log(data);
-
         res.json(data);
     });
 }

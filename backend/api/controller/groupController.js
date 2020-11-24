@@ -3,11 +3,11 @@ const Group = require("../model/Group");
 const User = require("../model/User");
 var fs = require('fs');
 var path = require('path');
+const { uploadImage, uploadGroupImage } = require("./uploadController");
 
 exports.addUsertoGroup = async (group, user) => {
 
-    console.log(group);
-    console.log(user);
+ 
     try {
         group.groupmembers.push(user);
         await group.save();
@@ -21,9 +21,11 @@ exports.addUsertoGroup = async (group, user) => {
 exports.createGroup = async (req, res) => {
 
     try {
-        let isCreated = await Group.find({ name: req.body.name });
-        let creator = await User.findById(req.body.creator);
+        console.log(req.body.groupname);
 
+        let isCreated = await Group.find({ groupname: req.body.groupname });
+        let creator = await User.findById(req.body.creator);
+       
         if (isCreated.length >= 1) {
             return res.status(409).json({
                 message: "Gruppenname ist schon vergeben"
@@ -35,14 +37,17 @@ exports.createGroup = async (req, res) => {
 
         //create new group and add Creator of Group to Members
         const group = new Group({
-            groupname: req.body.name,
+            groupname: req.body.groupname,
             groupdescription: req.body.description,
             entryKey: entryKey,
             groupmembers: [creator]
-
         });
 
-        let data = await group.save();
+
+        let data = await group.save()
+        console.log(data._id);
+
+        uploadGroupImage(req.body.groupimage, data._id);
         res.status(201).json({ data });
 
     } catch (error) {
@@ -115,11 +120,11 @@ exports.getGroupMembers = async (req, res) => {
                     posts.groupmembers.forEach(element => {
                         console.log(element.profileImage)
                         if (element.profileImage == true) {
-                           
-                            imageAsBase64 = fs.readFileSync(path.join(__dirname + '..','..','..','uploads/'+element._id+".jpg"), 'base64');
+
+                            imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/' + element._id + ".jpg"), 'base64');
 
                         } else {
-                            imageAsBase64 = fs.readFileSync(path.join(__dirname + '..','..','..','uploads/test.jpg'), 'base64');
+                            imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/test.jpg'), 'base64');
                         }
                         members.push({
                             username: element.username,

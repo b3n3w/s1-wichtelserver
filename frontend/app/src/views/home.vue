@@ -8,6 +8,7 @@
       :groupname="group.groupname"
       :groupstatus="group.groupstatus"
       :groupdescription="group.groupdescription"
+      :groupimage="group.groupimage"
       >
       </group-card>
     </div>

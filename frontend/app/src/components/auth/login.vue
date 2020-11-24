@@ -52,9 +52,11 @@ export default {
             localStorage.setItem("jwt", token);
             swal("Success", "Login Successful", "Success");
             if (response.data.firstLogin) {
-              this.$router.push("/selectGroup");
+               this.$router.push("/selectGroup");
+              this.$router.push("/setup");
             } else {
-              this.$router.push("/home");
+               this.$router.push("/setup");
+            //  this.$router.push("/home");
             }
           }
         },
