@@ -41,6 +41,12 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    likes: [{
+        type: String,
+    }],
+    dislikes: [{
+        type: String,
+    }],
     tokens: [
         {
             token: {
@@ -83,11 +89,11 @@ UserSchema.methods.generateAuthToken = async function () {
 
 
 
-UserSchema.methods.generateChatToken = async function(chatID){
+UserSchema.methods.generateChatToken = async function (chatID) {
     const user = this;
     const chatToken = jwt.sign(
         {
-            _id: chatID, 
+            _id: chatID,
         }
     )
 

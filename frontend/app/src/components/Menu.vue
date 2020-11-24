@@ -2,9 +2,20 @@
   <div class="header">
     <img class="img-header" @click="gotoHome()" src="@/assets/s1_logo.png" />
     <div class="header-right">
-      <button class="active" @click="gotoHome()">Home</button>
-      <button @click="showUserProfile()">Profil</button>
       <button @click="logoutUser()">Logout</button>
+      <img
+        class="icon-header"
+        @click="gotoHome()"
+        src="@/assets/images/gift.svg"
+      />
+        <figcaption class="figcaption">Wichteln</figcaption>
+      <div class="vl"></div>
+      <img
+        class="icon-header"
+        @click="showUserProfile()"
+        src="@/assets/images/profile.svg"
+      />
+      <figcaption class="figcaption">Profil</figcaption>
     </div>
   </div>
 </template>
@@ -40,7 +51,7 @@ export default {
 
 /* Style the header links */
 .header button {
-  float: left;
+  float: right;
   text-align: center;
   padding: 20px;
   border: none;
@@ -51,23 +62,16 @@ export default {
   line-height: 25px;
   width: 100px;
   border-radius: 32px;
-
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: rgba(245, 222, 179, 0);
 }
 
-/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
-.header a.logo {
-  font-size: 25px;
-  font-weight: bold;
-}
 
 .img-header {
- max-width: 5%;
- min-width: 4%;
-
- float: left;
- margin-left: 10px;
+  max-width: 5%;
+  min-width: 4%;
+  float: left;
+  margin-left: 10px;
 }
 /* Change the background color on mouse-over */
 .header button:hover {
@@ -84,26 +88,33 @@ export default {
 /* Float the link section to the right */
 .header-right {
   float: right;
+  
+}
+
+.figcaption{
+width: 20px;
 }
 
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header button {
-    float: left;
     display: block;
     text-align: left;
     padding: 10px;
     text-align: center;
   }
-  .header-right {
-    float: none;
+  .header {
+    padding: 30px 10px;
   }
-  .img-header{
-    float: left;
+  .img-header {
     margin-top: 5px;
     margin-right: 20px;
     max-width: 10%;
   }
+  .icon-header {
+    width: 40px;
+  }
+ 
 }
 </style>
 

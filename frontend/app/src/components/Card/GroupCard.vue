@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       data: "",
-      statustex :""
+      statustex: "",
     };
   },
   name: "group-card",
@@ -50,7 +50,6 @@ export default {
   },
 
   methods: {
-   
     goToGroup() {
       this.$router.push({ name: "group", params: { groupId: this.groupId } });
     },
@@ -70,7 +69,7 @@ export default {
   height: auto;
   background: #757ca3c5;
   position: relative;
-
+  border: none;
   border-radius: 32px;
 
   padding: 10px;
@@ -112,7 +111,23 @@ export default {
 
 @media only screen and (max-width: 480px) {
   .card {
-    margin-left: 75px;
+    margin-left: 25px;
+  }
+  .btn-primary {
+    width: 70%;
+    margin-top: 5px;
+  }
+  .img-card {
+    width: 60px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .card {
+    margin-left: 20px;
+  }
+  .img-card {
+    width: 80px;
   }
 }
 </style>

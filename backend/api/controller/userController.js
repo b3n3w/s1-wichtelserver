@@ -25,7 +25,9 @@ exports.registerNewUser = async (req, res) => {
             lastname: req.body.lastname,
             street: req.body.street,
             zip: req.body.zip,
-            city: req.body.city
+            city: req.body.city,
+            likes: [],
+            dislikes: []
         });
 
         let data = await user.save();
@@ -107,11 +109,13 @@ exports.verifyUser = async (req, res) => {
 
 
 
+
+
 exports.getUserProfile = async (req, res) => {
     let userID = req.userData._id
     let user = await User.findById(userID);
 
-    var imageAsBase64 = fs.readFileSync(path.join(__dirname + '..','..','..','uploads/'+userID+".jpg"), 'base64');
+    var imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/' + userID + ".jpg"), 'base64');
 
     const data = {
         username: user.username,
@@ -121,6 +125,8 @@ exports.getUserProfile = async (req, res) => {
         street: user.street,
         city: user.city,
         zip: user.zip,
+        likes: user.likes,
+        dislikes: user.dislikes,
         img: imageAsBase64
     }
     res.json(data)
@@ -128,9 +134,39 @@ exports.getUserProfile = async (req, res) => {
 
 
 exports.getUserDetails = async (req, res) => {
-    await res.json(req.userData);
+    await res.status(201).json(req.userData);
 };
 
+exports.setPersonalties = async (req, res) => {
+
+    await User.findOneAndUpdate({ _id: req.body.id }, { "$set": { "likes": req.body.likes, "dislikes": req.body.dislikes } }).exec(function (err, user) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(user);
+        }
+    });
+}
+
+
+
+
+
+exports.getPersonalities = async (req, res) => {
+
+    await User.findById(req.body.id).exec(function (err, user) {
+
+        if (err) {
+            res.status(403).send(err);
+        }
+
+        let personalities = [];
+        personalities.push({ likes: user.likes });
+        personalities.push({ dislikes: user.dislikes });
+
+        res.json(personalities);
+    })
+};
 
 
 
