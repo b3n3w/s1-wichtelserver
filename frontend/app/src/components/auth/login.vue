@@ -45,7 +45,7 @@ export default {
     async loginUser() {
       this.$axios.post("/user/login", this.login).then(
         (response) => {
-          console.log(response);
+       
           let token = response.data.token;
 
           if (token) {

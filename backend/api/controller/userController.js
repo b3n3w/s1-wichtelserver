@@ -87,7 +87,7 @@ exports.verifyUser = async (req, res) => {
                     return res.sendStatus(403)
                 } else {
                     id = decoded.id;
-                    console.log(id);
+               
                     const user = User.findById(id, function (err, user) {
                         if (!user) {
                             throw new Error({ error: "User for verification not found" });
@@ -113,7 +113,7 @@ exports.updateUser = async (req, res) => {
     let image = req.body.profileImg;
     if (image === undefined) {  
     }else{
-        console.log("okay geht rein")
+        
         await uploadImage(image, "user", req.params.id)
     }
 

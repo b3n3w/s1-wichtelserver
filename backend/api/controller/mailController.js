@@ -34,7 +34,7 @@ transport.verify(function (err, success) {
 
 const sendRegisterMail = (req) => {
 
-    console.log("testmail");
+
     var message = {
         from: '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>',
         to: req,
@@ -59,7 +59,7 @@ const sendAccountVerify = async (user) => {
     }
 
     const mail_token_verification = jwt.sign(mail, process.env.JWT_VERIFY_KEY, { expiresIn: '1d' });
-    var url = process.env.VUE_APP_API_ENDPOINT + "verify?id=" + mail_token_verification;
+    var url = process.env.VUE_APP_API_ENDPOINT + "user/verify?id=" + mail_token_verification;
 
     let transportMail = await transport.sendMail({
         from: sender,
@@ -73,19 +73,8 @@ const sendAccountVerify = async (user) => {
             return;
         }
         console.log('Message sent successfully!');
-        console.log(info);
+     
         transporter.close();
-    });
-}
-
-
-const testmail = (req, res) => {
-    console.log("test");
-    transport.sendMail(testmessage, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
     });
 }
 
@@ -93,7 +82,7 @@ const testmail = (req, res) => {
 const sendWichtelMails = async (group) => {
     var wichtelMessage = "";
 
-    console.log(group);
+ 
     for (const pair of group) {
         let wichtel = await User.findById(pair[0]._id);
         let receiver = await User.findById(pair[1]._id);

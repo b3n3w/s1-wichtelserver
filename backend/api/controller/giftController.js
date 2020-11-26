@@ -28,7 +28,7 @@ exports.startWichteln = async (req, res) => {
 
             //check if enough members in Group to start wichteln
 
-            console.log("groupUsers")
+           
             if (groupUsers.length < 3) {
                 return res.status(403).send({
                     message: "Leider sind zu wenige Wichtel in dieser Gruppe. Mindestens drei werden benötigt"
@@ -65,12 +65,40 @@ exports.startWichteln = async (req, res) => {
             })
 
             updateGroup(groupId);
-            
-           res.status(201).send(map)
-           sendMails(map)
+
+            res.status(201).send(map)
+            sendMails(map)
         })
 }
-async function sendMails(group){
+
+
+exports.getGiftPartner = async (req, res) => {
+
+    try {
+        await Gift.findOne({ group: req.query.groupID, wichtel: req.query.userID }).populate({ path: 'receiver', model: 'User' })
+            .exec(function (err, gift) {
+                if (err) {
+                    res.status(409).send({ message: "No such gift found" })
+                }
+                let partnerData = {
+                    username: gift.receiver.username,
+                    firstname: gift.receiver.firstname,
+                    lastname: gift.receiver.lastname,
+                    street: gift.receiver.street,
+                    zip: gift.receiver.zip,
+                    city: gift.receiver.city,
+                    likes: gift.receiver.likes,
+                    dislikes: gift.receiver.dislikes,
+                    createdAt: gift.createdAt
+                }
+                res.status(200).send(partnerData);
+            });
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function sendMails(group) {
     let doc = await nodemailer.sendWichtelMails(group);
 }
 

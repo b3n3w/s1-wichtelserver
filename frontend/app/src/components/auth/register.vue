@@ -150,7 +150,7 @@ export default {
       };
       this.$axios.post("/user/register", register).then(
         (response) => {
-          console.log(response);
+      
           let token = response.data.token;
           if (token) {
             localStorage.setItem("jwt", token);

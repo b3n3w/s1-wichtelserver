@@ -69,7 +69,7 @@ UserSchema.pre(
 
             const hash = await bcrypt.hash(this.password, 10);
             user.password = hash;
-            console.log(user)
+           
         }
         next();
     }
@@ -102,7 +102,6 @@ UserSchema.methods.generateChatToken = async function (chatID) {
 //this method search for a user by username and password.
 UserSchema.statics.findByCredentials = async (username, password) => {
     const user = await User.findOne({ username });
-    console.log(user);
     if (!user) {
         throw new Error({ error: "Invalid login details" });
     }

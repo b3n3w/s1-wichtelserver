@@ -17,8 +17,6 @@ exports.uploadImage = async (image, type, id) => {
     base64Img.img(image, __dirname + '../../../uploads/', id, function (err, filepath) {
         const pathArr = filepath.split('/')
         const fileName = id;
-        console.log(pathArr);
-        console.log(fileName);
         if (type == "user") {
             updateUser(id);
         }
