@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Menu />
+
+    <v-main>
     <div class="profile-content">
       <div class="container-profile">
         <div class="row">
@@ -44,10 +44,10 @@
       <h5 class="userinformation-heading">Stadt</h5>
       <h4 class="userinformation">{{ user.city }}</h4>
     </div>
-  </div>
+   </v-main>
 </template>
 <script>
-import Menu from "@/components/Menu";
+
 import jwt_decode from "jwt-decode";
 
 export default {
@@ -58,7 +58,7 @@ export default {
     };
   },
   components: {
-    Menu,
+
   },
   created() {
     this.$axios
@@ -88,9 +88,9 @@ export default {
     },
     uploadImage() {
       const { image } = this;
-      let uID = jwt_decode(localStorage.getItem("jwt"))._id;
+      let id = jwt_decode(localStorage.getItem("jwt"))._id;
       this.$axios
-        .post("/upload", { image: image, uID: uID })
+        .post("/upload", { image: image, id: id })
         .then((response) => {
           this.remoteUrl = response.data.url;
         })

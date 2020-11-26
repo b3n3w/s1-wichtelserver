@@ -22,6 +22,9 @@ const routes = [
   {
     path: "/profile",
     name: "profile",
+    meta: {
+      requiresAuth: true
+    },
     component: () => import("../views/profile.vue")
   },
 
@@ -36,6 +39,9 @@ const routes = [
   },{
     path: "/setup",
     name: "setup",
+    meta: {
+      requiresAuth:true
+    },
     component: () => import ("../views/setup.vue")
   }
 

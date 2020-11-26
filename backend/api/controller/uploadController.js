@@ -9,37 +9,22 @@ var sharp = require('sharp')
 
 
 
-exports.uploadImage = async (req, res) => {
-    var image = req.body.image;
+exports.uploadImage = async (image, type, id) => {
 
+    image = "data:image/jpeg;base64," + image;
     image = await resizeBase64(image);
 
-    base64Img.img(image, __dirname + '../../../uploads/', req.body.uID, function (err, filepath) {
+    base64Img.img(image, __dirname + '../../../uploads/', id, function (err, filepath) {
         const pathArr = filepath.split('/')
-        const fileName = req.body.uID;
+        const fileName = id;
         console.log(pathArr);
         console.log(fileName);
-
-        updateUser(req.body.uID);
-        res.status(200).json({
-            success: true
-
-        })
+        if (type == "user") {
+            updateUser(id);
+        }
     });
 };
 
-exports.uploadGroupImage = async (base64Image, groupID) => {
-    var image = "data:image/jpeg;base64,"+ base64Image;
-   image = await resizeBase64(image);
-
-    base64Img.img(image, __dirname + '../../../uploads/', groupID, function (err, filepath) {
-        const pathArr = filepath.split('/')
-        const fileName = groupID;
-        if (err) {
-            console.log(err);
-        }
-    });
-}
 
 async function resizeBase64(base64Image, maxHeight = 640, maxWidth = 640) {
 

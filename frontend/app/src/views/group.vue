@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Menu />
     <div class="groupstatus">
       <h3>{{ groupstatus }}</h3>
     </div>
@@ -24,7 +23,7 @@
 </template>
 
 <script>
-import Menu from "@/components/Menu";
+
 import MemberCard from "../components/Card/MemberCard.vue";
 import swal from "sweetalert";
 import jwt_decode from "jwt-decode";
@@ -37,7 +36,6 @@ export default {
     };
   },
   components: {
-    Menu,
     MemberCard,
   },
   props: {

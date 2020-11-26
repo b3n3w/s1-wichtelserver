@@ -47,7 +47,7 @@ exports.createGroup = async (req, res) => {
         let data = await group.save()
         console.log(data._id);
 
-        uploadGroupImage(req.body.groupimage, data._id);
+        uploadImage(req.body.groupimage, data._id, "group");
         res.status(201).json({ data });
 
     } catch (error) {

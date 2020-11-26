@@ -1,11 +1,11 @@
 <template>
   <div class="header">
-    <img class="img-header" @click="gotoHome()" src="@/assets/s1_logo.png" />
+    
     <div class="header-right">
       <button @click="logoutUser()">Logout</button>
       <img
         class="icon-header"
-        @click="gotoHome()"
+        :to="'/'"
         src="@/assets/images/gift.svg"
       />
         <figcaption class="figcaption">Wichteln</figcaption>

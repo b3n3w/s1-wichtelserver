@@ -23,8 +23,6 @@
               <v-btn
                 color="rgba(50, 57, 79)"
                 class="white--text"
-                depressed
-                text
                 @click="enterGroup()"
                 >Gruppe beitreiten
               </v-btn>
@@ -69,11 +67,10 @@
                 hint="Hint text"
                 dark
               ></v-textarea>
+
               <v-btn
                 color="rgba(50, 57, 79)"
                 class="white--text"
-                depressed
-                text
                 @click="createGroup()"
                 >Gruppe erstellen
               </v-btn>
@@ -81,16 +78,55 @@
           </v-window-item>
 
           <v-window-item :value="3">
-            <div class="pa-4 text-center">
-              <v-img
-                class="mb-4"
-                contain
-                height="128"
-                src="https://cdn.vuetifyjs.com/images/logos/v.svg"
-              ></v-img>
-              <h3 class="title font-weight-light mb-2">Welcome to Vuetify</h3>
-              <span class="caption grey--text">Thanks for signing up!</span>
-            </div>
+            <image-input v-model="avatar">
+              <div slot="activator">
+                <v-avatar
+                  size="150px"
+                  v-ripple
+                  v-if="!avatar"
+                  class="grey lighten-3 mb-3"
+                  style="margin: mx-auto"
+                >
+                  <span>Profilbild hinzufügen</span>
+                </v-avatar>
+                <v-avatar size="150px" v-ripple v-else class="mb-3">
+                  <img :src="avatar.imageURL" alt="avatar" />
+                </v-avatar>
+              </div>
+            </image-input>
+            <v-slide-x-transition>
+              <div v-if="avatar && saved == false">
+                <v-btn class="primary" @click="uploadImage" :loading="saving"
+                  >Save Avatar</v-btn
+                >
+              </div>
+            </v-slide-x-transition>
+            <v-combobox
+              v-model="likes"
+              label="Das mag ich besonders"
+              small-chips
+              multiple
+              color="white"
+              dark
+              style="margin-bottom:5%"
+            >
+            </v-combobox>
+            <v-combobox
+              v-model="dislikes"
+              label="Das kann ich gar nicht leiden"
+              small-chips
+              multiple
+              dark
+              color="white"
+               style="margin-bottom:5%"
+            >
+            </v-combobox>
+            <v-btn
+              color="rgba(50, 57, 79)"
+              class="white--text"
+              @click="saveProfile()"
+              >Einrichtung abschließen
+            </v-btn>
           </v-window-item>
         </v-window>
 
@@ -118,6 +154,7 @@
             color="rgba(50, 57, 79)"
             class="white--text"
             depressed
+            text
             @click="step++"
           >
             Weiter
@@ -144,6 +181,9 @@ export default {
       description: "",
       creator: "",
       avatar: "",
+      likes: [],
+      dislikes: [],
+      loading4: false,
     };
   },
   components: {
@@ -204,6 +244,25 @@ export default {
         }
       );
     },
+    saveProfile() {
+      console.log(this.userID);
+      this.userID = jwt_decode(localStorage.getItem("jwt"))._id;
+      let data = {
+        profileImg: this.avatar.base64String,
+        likes: this.likes,
+        dislikes: this.dislikes,
+      };
+      this.$axios.put("/user/" + this.userID, data).then(
+        (response) => {
+          if (response.status){
+            this.$router.push('/home');
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
     uploadImage() {
       this.saving = true;
       setTimeout(() => this.savedAvatar(), 1000);
@@ -222,7 +281,7 @@ export default {
         case 2:
           return "Möchtest du eine neue Gruppe erstellen ?";
         default:
-          return "Account created";
+          return "Vervollständige dein Profil";
       }
     },
   },

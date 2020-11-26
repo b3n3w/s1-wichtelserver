@@ -1,21 +1,22 @@
 <template>
-  <div>
-    <Menu />
-    <div transition="expand" v-for="group in groups" :key="group.groupname">
-      <group-card 
-      :groupId="group.groupId"
-      :usercount="group.usercount" 
-      :groupname="group.groupname"
-      :groupstatus="group.groupstatus"
-      :groupdescription="group.groupdescription"
-      :groupimage="group.groupimage"
-      >
-      </group-card>
-    </div>
-  </div>
+
+
+    <v-main>
+      <div transition="expand" v-for="group in groups" :key="group.groupname">
+        <group-card
+          :groupId="group.groupId"
+          :usercount="group.usercount"
+          :groupname="group.groupname"
+          :groupstatus="group.groupstatus"
+          :groupdescription="group.groupdescription"
+          :groupimage="group.groupimage"
+        >
+        </group-card>
+      </div>
+    </v-main>
+
 </template>
 <script>
-import Menu from "@/components/Menu";
 
 import GroupCard from "@/components/Card/GroupCard";
 
@@ -28,7 +29,7 @@ export default {
     };
   },
   components: {
-    Menu,
+
     GroupCard,
   },
   created() {
@@ -41,7 +42,7 @@ export default {
       })
       .then((response) => {
         this.groups = response.data;
-        console.log(this.groups)
+        console.log(this.groups);
       });
   },
   methods: {},

@@ -13,6 +13,7 @@ router.get('/groups', auth, userController.getUserGroups);
 
 router.post("/register", userController.registerNewUser);
 router.post("/login", userController.loginUser);
+router.put("/:id", userController.updateUser);
 
 
 

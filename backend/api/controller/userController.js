@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Group = require("../model/Group");
 var path = require('path');
 var fs = require('fs');
+const { uploadImage } = require("./uploadController");
 
 
 exports.registerNewUser = async (req, res) => {
@@ -107,8 +108,24 @@ exports.verifyUser = async (req, res) => {
     }
 }
 
+exports.updateUser = async (req, res) => {
 
+    let image = req.body.profileImg;
+    if (image === undefined) {  
+    }else{
+        console.log("okay geht rein")
+        await uploadImage(image, "user", req.params.id)
+    }
 
+    let user = await User.findById(req.params.id).update({ likes: req.body.likes, dislikes: req.body.dislikes }).exec(function (err, user) {
+        if (err) {
+            console.log(err);
+            res.status(409).send(err);
+        }else{
+            res.status(201).send("Nutzerinformationen erfolgreich gespeichert");
+        }
+    })
+}
 
 
 exports.getUserProfile = async (req, res) => {
