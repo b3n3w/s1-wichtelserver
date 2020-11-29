@@ -8,8 +8,17 @@ services:
       - proxy
     labels:
       - "traefik.frontend.rule=Host:wichteln.spielplatz.duckdns.org"
-      - "traefik.port=8081"
+      - "traefik.port=8080"
       - "traefik.backend=wichteln.frontend"
       - "traefik.frontend.entryPoints=http,https"
     volumes:
-      - ./wichteln_frontend/dist:/app
+      - ./wichteln_frontend/dist:/app/vol
+
+
+
+networks: 
+  proxy:
+    external: true
+
+
+
