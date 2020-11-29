@@ -268,7 +268,6 @@ export default {
       setTimeout(() => this.savedAvatar(), 1000);
     },
     savedAvatar() {
-      console.log(this.avatar.base64);
       this.saving = false;
       this.saved = true;
     },

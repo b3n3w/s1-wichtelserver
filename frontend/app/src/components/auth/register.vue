@@ -127,14 +127,14 @@ export default {
       if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
         this.msg["email"] = "";
       } else {
-        this.msg["email"] = "Invalid Email Address";
+        this.msg["email"] = "Invalide Email Addresse";
       }
     },
     validateZip(value) {
       if (/(^\d{5}$)/.test(value)) {
         this.msg2["zip"] = "";
       } else {
-        this.msg2["zip"] = "Invalid PLZ";
+        this.msg2["zip"] = "Invalide PLZ";
       }
     },
     async registerUser() {
@@ -175,7 +175,8 @@ export default {
 };
 </script>
 <style scoped>
-.error {
-  color: red;
+v-application .error{
+  color: rgba(236, 211, 211, 0);
+  background-color: rgba(202, 118, 118, 0)
 }
 </style>

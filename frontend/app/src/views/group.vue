@@ -19,20 +19,74 @@
     >
       Starte Wichteln
     </button>
-    <button  class="btn-start" v-show="wichtelstarted" @click="getPartner()">
+    <button class="btn-start" v-show="wichtelstarted" @click="getPartner()">
       Zeige mir meinen Wichtel
     </button>
-    <v-overlay :absolute="absolute" :value="overlay">
-      <v-card>
-        <h2>{{ this.partner.username }}</h2>
-        <v-expansion-panel v-model="panel" :disabled="disabled" multiple>
-          <v-expansion-panel-header>Zeige Adressdaten</v-expansion-panel-header>
-          <v-expansion-panel-content> Some content </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-card>
-      <v-btn color="success" @click="overlay = false"> Hide Overlay </v-btn>
-    </v-overlay>
+    <v-overlay :value="overlay">
+      <v-card :loading="loading" class="mx-auto my-12" max-width="330" style="margin-bottom: 20px">
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
 
+        <v-img
+          height="210"
+          v-bind:src="'data:image/jpeg;base64,' + this.partner.image"
+          style="margin-bottom: 8px"
+        ></v-img>
+        <v-icon class="close" @click="overlay = false">mdi-close</v-icon>
+
+        <h3 style="margin-bottom: 2%">{{ this.partner.username }}</h3>
+
+        <v-divider class="mx-4"></v-divider>
+
+        <p style="margin-bottom: 1%">Das mag dein Wichtel besonders</p>
+        <v-card-text style="margin-top: -5px">
+          <v-chip-group
+            v-model="selection"
+            active-class=" accent-4 white--text"
+            column
+          >
+            <v-chip v-for="(like, index) in this.partner.likes" :key="index">{{
+              like
+            }}</v-chip>
+          </v-chip-group>
+        </v-card-text>
+
+        <v-divider class="mx-4"></v-divider>
+        <p style="margin-bottom: 1%">Das kann dein Wichtel gar nicht leiden</p>
+        <v-card-text style="margin-top: -5px">
+          <v-chip-group
+            v-model="selection"
+            active-class=" accent-4 white--text"
+            column
+          >
+            <v-chip
+              color=""
+              v-for="(dislike, index) in this.partner.dislikes"
+              :key="index"
+              >{{ dislike }}</v-chip
+            >
+          </v-chip-group>
+        </v-card-text>
+        <v-divider class="mx-4"></v-divider>
+        <p style="margin-bottom: 1%">Adressdaten</p>
+
+        <body-2 class="font-weight-light">
+          {{ this.partner.firstname }} {{ this.partner.lastname }}
+        </body-2>
+        <v-spacer></v-spacer>
+        <body-2 class="font-weight-light"> {{ this.partner.street }} </body-2>
+        <v-spacer></v-spacer>
+        <body-2 class="font-weight-light">
+          {{ this.partner.city }} {{ this.partner.zip }}
+        </body-2>
+       <v-divider class="mx-4"></v-divider>
+      </v-card >
+    </v-overlay>
     <div class="container">
       <div class="row">
         <div v-for="member in memberlist" :key="member.username">
@@ -66,6 +120,7 @@ export default {
         street: "",
         zip: "",
         city: "",
+        image: "",
         likes: [],
         dislikes: [],
       },
@@ -115,7 +170,7 @@ export default {
         })
         .then((response) => {
           this.overlay = true;
-          this.partner.username = response.data.username;
+          this.partner = response.data;
           console.log(response.data);
         });
     },
@@ -152,7 +207,7 @@ export default {
 </script>
 <style scoped>
 .row {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .btn-start {
@@ -164,6 +219,44 @@ export default {
 }
 .groupstatus {
   margin-bottom: 10px;
+}
+.hr {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+.v-card__text {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.col1 {
+  float: left;
+  width: 50%;
+}
+
+.overlay-btn {
+  background-color: "#32394f";
+}
+
+.close {
+  position: absolute;
+  top: 4%;
+  left: 89%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+
+  border: none;
 }
 
 @media only screen and (max-width: 480px) {

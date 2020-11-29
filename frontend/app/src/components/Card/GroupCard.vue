@@ -67,11 +67,10 @@ export default {
 .btn-primary {
   width: auto;
   height: auto;
-  background: #757ca3c5;
+  background: #32394f;
   position: relative;
   border: none;
   border-radius: 32px;
-
   padding: 10px;
   text-align: center;
   cursor: pointer;
@@ -109,16 +108,16 @@ export default {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 400px) {
   .card {
-    margin-left: 25px;
+    margin-left: 30px;
   }
   .btn-primary {
     width: 70%;
     margin-top: 5px;
   }
   .img-card {
-    width: 60px;
+    width: 90px;
   }
 }
 

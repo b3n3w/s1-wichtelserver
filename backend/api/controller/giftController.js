@@ -2,8 +2,8 @@ const Group = require("../model/Group");
 const Gift = require("../model/Gift");
 const User = require("../model/User");
 var nodemailer = require('../controller/mailController');
-
-
+var path = require('path');
+var fs = require('fs');
 exports.startWichteln = async (req, res) => {
 
     let groupUsers = []
@@ -80,6 +80,14 @@ exports.getGiftPartner = async (req, res) => {
                 if (err) {
                     res.status(409).send({ message: "No such gift found" })
                 }
+                let imageAsBase64 ="";
+                if (gift.receiver.profileImage == true) {
+
+                    imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/' + gift.receiver._id + ".jpg"), 'base64');
+
+                } else {
+                    imageAsBase64 = fs.readFileSync(path.join(__dirname + '..', '..', '..', 'uploads/test.jpg'), 'base64');
+                }
                 let partnerData = {
                     username: gift.receiver.username,
                     firstname: gift.receiver.firstname,
@@ -87,6 +95,7 @@ exports.getGiftPartner = async (req, res) => {
                     street: gift.receiver.street,
                     zip: gift.receiver.zip,
                     city: gift.receiver.city,
+                    image: imageAsBase64,
                     likes: gift.receiver.likes,
                     dislikes: gift.receiver.dislikes,
                     createdAt: gift.createdAt

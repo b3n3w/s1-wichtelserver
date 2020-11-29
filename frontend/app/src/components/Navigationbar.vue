@@ -8,11 +8,12 @@
         contain
         :to="'/'"
         src="../assets/s1_logo.png"
+        @click="gotoHome()"
       />
 
       <v-toolbar-title class="text-uppercase">
       
-        <span class="white--text">WICHTELN</span>
+        <span  class="white--text">WICHTELN</span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

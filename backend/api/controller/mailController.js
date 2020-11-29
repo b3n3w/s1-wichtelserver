@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const User = require("../model/User");
-
+var path = require('path');
 const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
 const testmessage = {
 
@@ -32,24 +32,6 @@ transport.verify(function (err, success) {
     }
 })
 
-const sendRegisterMail = (req) => {
-
-
-    var message = {
-        from: '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>',
-        to: req,
-        subject: 'Willkommen beim alljährlichen S1-Wichteln! ',
-        text: 'Hallo lieber Wichtel !, meine Name ist Shanti die Wichtelfee und ich darf dich herzlichst beim diesjährigen S1 Wichteln begrüßen',
-        html: '<b> Hallo lieber Wichtel !,</b><br>  meine Name ist Shanti die Wichtelfee und ich darf dich herzlichst beim diesjährigen S1 Wichteln begrüßen'
-    };
-    transport.sendMail(message, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent : %s', info.messageId)
-    })
-}
-
 const sendAccountVerify = async (user) => {
     var date = new Date();
 
@@ -64,16 +46,19 @@ const sendAccountVerify = async (user) => {
     let transportMail = await transport.sendMail({
         from: sender,
         to: user.email,
-        subject: "S1-Wichteln Account Bestätigung",
-        text: "Ey jo bitte klick auf den Link " + url,
+        subject: "S1-Wichteln - Account Bestätigung",
+        text: "Hallo lieber Wichtel!,\nvielen Dank für deine Registrierung! Bitte klicke auf den nachfolgenden Link um deinen Account zu verifizieren.\n " + url,
+        html: 'Hallo lieber Wichtel!,\nvielen Dank für deine Registrierung! Bitte klicke auf den nachfolgenden Link um deinen Account zu verifizieren.\n ' + url,
+  
     }, (error, info) => {
 
         if (error) {
             console.log(error)
             return;
         }
-        console.log('Message sent successfully!');
-     
+
+        console.log('Message sent successfully!', info);
+
         transporter.close();
     });
 }
@@ -82,7 +67,7 @@ const sendAccountVerify = async (user) => {
 const sendWichtelMails = async (group) => {
     var wichtelMessage = "";
 
- 
+
     for (const pair of group) {
         let wichtel = await User.findById(pair[0]._id);
         let receiver = await User.findById(pair[1]._id);
@@ -90,9 +75,9 @@ const sendWichtelMails = async (group) => {
         wichtelMessage = {
             from: sender,
             to: wichtel.email,
-            subject: 'Die Verlosung hat begonnen ! <3',
-            text: 'Hallo lieber Wichtel !, In diesem Jahr darfst du den lieben Wichtel '  + receiver.usernamename + ' beschenken! Ich wünsche dir viel Spaß!',
-            html: '<b> Hallo lieber Wichtel !,</b><br>  In diesem Jahr darfst du den lieben Wichtel ' + receiver.username + ' beschenken! Ich wünsche dir viel Spaß!'
+            subject: 'S1-Wichteln - Die Verlosung hat begonnen ! <3',
+            text: 'Hallo lieber Wichtel!,\nIn diesem Jahr darfst du den lieben Wichtel ' + receiver.usernamename + ' beschenken! Ich wünsche dir viel Spaß!',
+            html: '<b> Hallo lieber Wichtel!,\n</b><br>In diesem Jahr darfst du den lieben Wichtel <b>' + receiver.username + '</b> beschenken! Ich wünsche dir viel Spaß! \nPS: Für weitere Informationen über deinen Wichtel, werfe doch einfach einen Blick in die Wichtelgruppe.',
         };
 
         await transport.sendMail(wichtelMessage, (error, info) => {

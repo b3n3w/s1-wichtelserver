@@ -9,15 +9,15 @@
 body {
   background-image: url("../image.jpg");
   background-position: center;
-  /*-webkit-background-size: cover;
+  -webkit-background-size: cover;
     -moz-background-size: cover;
-    -o-background-size: cover;*/
+    -o-background-height: cover;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
+
   text-align: center;
 }
+
 
 #christmas {
   background: #162a4e;
@@ -619,7 +619,6 @@ body, input, button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   min-height: 600px;
   margin: auto auto;
 }

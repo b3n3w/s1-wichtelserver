@@ -12,8 +12,9 @@ var sharp = require('sharp')
 exports.uploadImage = async (image, type, id) => {
 
     image = "data:image/jpeg;base64," + image;
+    console.log(image);
     image = await resizeBase64(image);
-
+    
     base64Img.img(image, __dirname + '../../../uploads/', id, function (err, filepath) {
         const pathArr = filepath.split('/')
         const fileName = id;
@@ -35,7 +36,7 @@ async function resizeBase64(base64Image, maxHeight = 640, maxWidth = 640) {
 
         return `data:${mimType};base64,${resizedImage.toString("base64")}`
     } catch (error) {
-        throwError({ error })
+        console.log(error);
     }
 };
 

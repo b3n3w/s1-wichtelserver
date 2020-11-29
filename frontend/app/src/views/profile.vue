@@ -1,26 +1,40 @@
 <template>
-
-    <v-main>
+  <v-main>
     <div class="profile-content">
       <div class="container-profile">
         <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <div class="profile">
               <div class="avatar">
-                <img  />
-                <img
-                  v-bind:src="'data:image/jpeg;base64,'+imageBase64"
-                  alt="Circle Image"
-                  class="profile-img"
-                />
-                <input
-                  @change="handleImage"
-                  class="custom-input"
-                  type="file"
-                  id="imgupload"
-                  accept="image/*"
-                />
-                
+                <image-input v-model="avatar">
+                  <div slot="activator">
+                    <v-avatar
+                      size="150px"
+                      v-ripple
+                      v-if="!avatar"
+                      class="grey lighten-3 mb-3"
+                      style="margin: mx-auto"
+                    >
+                      <span>Profilbild hinzufügen</span>
+                    </v-avatar>
+                    <v-avatar size="150px" v-ripple v-else class="mb-3">
+                      <img
+                        v-bind:src="'data:image/jpeg;base64,' + this.avatar"
+                        alt="avatar"
+                      />
+                      <v-slide-x-transition>
+                        <div v-if="avatar && saved == false">
+                          <v-btn
+                            class="primary"
+                            @click="uploadImage"
+                            :loading="saving"
+                            >Save Avatar</v-btn
+                          >
+                        </div>
+                      </v-slide-x-transition>
+                    </v-avatar>
+                  </div>
+                </image-input>
               </div>
               <div class="name">
                 <h3 class="title">{{ user.username }}</h3>
@@ -30,36 +44,36 @@
         </div>
       </div>
     </div>
+      <button class="btn-primary" @click="saveProfile()">speichern</button>
     <div class="container-profile information">
-      <h5 class="userinformation-heading">Email-Adresse</h5>
-      <h4 class="userinformation">{{ user.email }}</h4>
-      <h5 class="userinformation-heading">Vorname</h5>
-      <h4 class="userinformation">{{ user.firstname }}</h4>
-      <h5 class="userinformation-heading">Nachname</h5>
-      <h4 class="userinformation">{{ user.lastname }}</h4>
-      <h5 class="userinformation-heading">Straße</h5>
-      <h4 class="userinformation">{{ user.street }}</h4>
-      <h5 class="userinformation-heading">PLZ</h5>
-      <h4 class="userinformation">{{ user.zip }}</h4>
-      <h5 class="userinformation-heading">Stadt</h5>
-      <h4 class="userinformation">{{ user.city }}</h4>
+      <body-2 class="userinformation-heading">Email-Adresse</body-2>
+      <h5 class="userinformation">{{ user.email }}</h5>
+      <body-2 class="userinformation-heading">Vorname</body-2>
+      <h5 class="userinformation">{{ user.firstname }}</h5>
+      <body-2 class="userinformation-heading">Nachname</body-2>
+      <h5 class="userinformation">{{ user.lastname }}</h5>
+      <body-2 class="userinformation-heading">Straße</body-2>
+      <h5 class="userinformation">{{ user.street }}</h5>
+      <body-2 class="userinformation-heading">PLZ</body-2>
+      <h5 class="userinformation">{{ user.zip }}</h5>
+      <body-2 class="userinformation-heading">Stadt</body-2>
+      <h5 class="userinformation">{{ user.city }}</h5>
     </div>
-   </v-main>
+  
+  </v-main>
 </template>
 <script>
-
 import jwt_decode from "jwt-decode";
-
+import ImageInput from "../components/Files/ImageInput.vue";
 export default {
   data() {
     return {
       user: {},
-      imageBase64: ""
+      avatar: "",
+      loading: false,
     };
   },
-  components: {
-
-  },
+  components: { ImageInput: ImageInput },
   created() {
     this.$axios
       .get("/user/me", {
@@ -69,39 +83,48 @@ export default {
       })
       .then((response) => {
         this.user = response.data;
-        this.imageBase64 = this.user.img
-  
+        this.avatar = this.user.img;
       });
   },
   methods: {
-    handleImage(e) {
-      const selectedImage = e.target.files[0]; // get first file
-      this.createBase64Image(selectedImage);
-    },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.image = e.target.result;
-        this.uploadImage();
+    saveProfile() {
+      this.userID = jwt_decode(localStorage.getItem("jwt"))._id;
+      let data = {
+        profileImg: this.avatar.base64String,
       };
-      reader.readAsDataURL(fileObject);
+      this.$axios.put("/user/" + this.userID, data).then(
+        (response) => {
+          if (response.status){
+            this.$router.push('/home');
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     },
     uploadImage() {
-      const { image } = this;
-      let id = jwt_decode(localStorage.getItem("jwt"))._id;
-      this.$axios
-        .post("/upload", { image: image, id: id })
-        .then((response) => {
-          this.remoteUrl = response.data.url;
-        })
-        .catch((err) => {
-          return new Error(err.message);
-        });
+      this.saving = true;
+      setTimeout(() => this.savedAvatar(), 1000);
+    },
+    savedAvatar() {
+      console.log(this.avatar.base64);
+      this.saving = false;
+      this.saved = true;
     },
   },
 };
 </script>
 <style >
+
+.btn-primary{
+  background: #32394f;
+  border-radius: 32px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 5px;
+}
 .container-profile {
   background: hsla(229, 22%, 10%, 0.631);
   border-radius: 32px;
@@ -113,8 +136,7 @@ export default {
 .profile-img {
   width: 150px;
   height: 150px;
-  border-radius: 32%
-
+  border-radius: 32%;
 }
 .title {
   color: white;
@@ -130,6 +152,4 @@ export default {
 .userinformation {
   color: rgba(255, 255, 255, 0.657);
 }
-
-
 </style>

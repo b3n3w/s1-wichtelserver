@@ -1,0 +1,15 @@
+version: "2"
+services:
+  frontend:
+    container_name: wichteln_frontend
+    restart: always
+    build: .
+    networks:
+      - proxy
+    labels:
+      - "traefik.frontend.rule=Host:wichteln.spielplatz.duckdns.org"
+      - "traefik.port=8081"
+      - "traefik.backend=wichteln.frontend"
+      - "traefik.frontend.entryPoints=http,https"
+    volumes:
+      - ./wichteln_frontend/dist:/app

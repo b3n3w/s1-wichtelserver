@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app app style="background: rgba(0, 0, 0, 0)">
+    <v-app app style="background: rgba(0, 0, 0, 0) ">
       <nav v-if="!['setup', 'index'].includes($route.name)">
       <Navigationbar />
       </nav>
