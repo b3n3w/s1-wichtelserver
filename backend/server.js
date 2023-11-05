@@ -18,26 +18,12 @@ InitiateMongoServer();
 
 const app = express();
 
-const corsOptions = {
-  origin: 'https://s1-wichtelserver.vercel.app/', // Replace this with the specific URL you want to allow
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-app.use(cors(corsOptions));
+//registering cors
+app.use(cors());
 
 // configire morgan
-app.use(morgan("combined"));
+app.use(morgan("dev"));
 
-
-// Custom CORS error handling middleware
-app.use((err, req, res, next) => {
-  if (err.name === 'CorsError') {
-    console.error('CORS Error:', err.message);
-    res.status(403).json({ error: 'CORS Error' });
-  } else {
-    next(err);
-  }
-});
 
 // Middleware
 
@@ -69,4 +55,4 @@ app.use(function (err, req, res, next) {
 
 
 app.listen(process.env.port || 3000);
-infoLog("Webserver running at Port 3000 \n")
+infoLog("Webserver running at Port 3000")
