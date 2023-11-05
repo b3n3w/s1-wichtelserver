@@ -16,8 +16,15 @@ services:
      - MONGODB_URI=
     ports:
       - "3000:3000"
-    links:
-      - mongo
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wichteln-http.entrypoints=web"
+      - "traefik.http.routers.wichteln-http.rule=Host(`wichteln.wagner-labs.com`)"
+      - "traefik.http.routers.wichteln.entrypoints=websecure"
+      - "traefik.http.routers.wichteln.rule=Host(`wichteln.wagner-labs.com`)"
+      - "traefik.http.routers.wichteln.tls=true"
+      - "traefik.http.routers.wichteln.tls.certresolver=http"
+      - "traefik.docker.network=proxy"
     volumes:
       - ./wichtelserver/api:/data/repo
 
