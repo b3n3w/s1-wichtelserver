@@ -18,11 +18,19 @@ InitiateMongoServer();
 
 const app = express();
 
+const corsOptions = {
+  origin: 'https://s1-wichtelserver.vercel.app/', // Replace this with the specific URL you want to allow
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+
 // configire morgan
 app.use(morgan("dev"));
 
 
 // Middleware
+
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(express.json());
@@ -36,7 +44,7 @@ app.use('/upload', uploadRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('File Not Found');
   err.status = 404;
   next(err);
 });
@@ -47,6 +55,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
 });
+
 
 
 app.listen(process.env.port || 3000);
