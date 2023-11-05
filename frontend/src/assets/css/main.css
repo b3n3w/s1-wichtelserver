@@ -7,15 +7,29 @@
 }
 
 body {
-  background-image: url("../image.jpg");
+  position: relative;
+  background-image: url("../images/image.jpg");
   background-position: center;
   -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-height: cover;
+  -moz-background-size: cover;
+  -o-background-height: cover;
   background-repeat: no-repeat;
   background-size: cover;
-
   text-align: center;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: inherit;
+  background-position: inherit;
+  background-size: inherit;
+  filter: blur(3px); /* Adjust the blur value as needed */
+  z-index: -1;
 }
 
 
