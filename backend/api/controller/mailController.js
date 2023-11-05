@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const User = require("../model/User");
 const { infoLog, successLog } = require('../helper/logging');
-const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
+const sender = `"S1 Wichtelfee" <${process.env.SMTP_SENDER_MAIL}>`;
 
 const transport = nodemailer.createTransport({
     pool: true,
@@ -51,8 +51,7 @@ const sendAccountVerify = async (user) => {
             return;
         }
 
-        console.log('Message sent successfully!', info);
-
+        infoLog(`Verify message was sent to: ${user.email}`)
         transporter.close();
     });
 }
@@ -78,7 +77,7 @@ const sendWichtelMails = async (group) => {
             if (error) {
                 return console.log(error);
             }
-            console.log('Message sent: %s', info.messageId);
+            infoLog(`Secret santa mail sent to: ${wichtel.email}`)
         });
     }
 }
