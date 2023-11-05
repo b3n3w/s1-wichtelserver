@@ -18,8 +18,12 @@ InitiateMongoServer();
 
 const app = express();
 
-//registering cors
-app.use(cors());
+const corsOptions = {
+  origin: 'https://s1-wichtelserver.vercel.app/', // Replace this with the specific URL you want to allow
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 // configire morgan
 app.use(morgan("dev"));
