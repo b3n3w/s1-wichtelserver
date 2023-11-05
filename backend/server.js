@@ -17,8 +17,6 @@ InitiateMongoServer();
 
 const app = express();
 
-
-
 //registering cors
 app.use(cors());
 
