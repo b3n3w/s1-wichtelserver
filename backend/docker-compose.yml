@@ -1,24 +1,23 @@
-version: "2"
+version: "3"
 services:
-  api:
+  wichtel-api:
     container_name: wichteln_backend
     restart: always
     build: .
+    environment:
+     - SMTP_PASSWORD=
+     - SMTP_USER=
+     - SMTP_SENDER_MAIL=
+     - SMTP_HOST=
+     - SMTP_PORT=
+     - JWT_VERIFY_KEY=
+     - VUE_APP_API_ENDPOINT=
+     - JWT_SECRET_KEY=
+     - MONGODB_URI=
     ports:
       - "3000:3000"
     links:
       - mongo
     volumes:
-      - /services/wichtelserver/api:/data/repo
-  mongo:
-    container_name: mongo
-    image: mongo
-    environment: 
-      - MONGO_INITDB_DATABASE=wichteln
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-    volumes:
-      - ./data:/data/db
-    ports:
-      - "27017:27017"
+      - ./wichtelserver/api:/data/repo
 
