@@ -19,7 +19,9 @@ InitiateMongoServer();
 const app = express();
 
 //registering cors
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 // configire morgan
 app.use(morgan("dev"));
