@@ -1,17 +1,7 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const User = require("../model/User");
-var path = require('path');
 const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
-const testmessage = {
-
-    from: '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>',
-    to: 'benedikt.wagner95@gmail.com',
-    subject: 'Nice Nodemailer test',
-    text: 'Hey there, it’s our first message sent with Nodemailer ; ',
-    html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer'
-};
-
 
 const transport = nodemailer.createTransport({
     pool: true,
@@ -19,8 +9,8 @@ const transport = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: "wichtelfee@s1-wichteln.de",
-        pass: process.env.MAIL_PASS,
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
     }
 });
 
