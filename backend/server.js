@@ -9,7 +9,7 @@ var userRouter = require('./api/routes/user')
 var groupRouter = require('./api/routes/group')
 var giftRouter = require('./api/routes/gift')
 var uploadRouter = require('./api/routes/upload');
-const { infoLog } = require('./api/helper/logging');
+const { infoLog, warningLog } = require('./api/helper/logging');
 
 
 // Initiate Mongo DB Server Connection
@@ -18,6 +18,7 @@ InitiateMongoServer();
 
 const app = express();
 
+warningLog("tester")
 // configire morgan
 app.use(morgan("dev"));
 
