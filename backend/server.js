@@ -8,7 +8,8 @@ var router = require('./api/routes/router');
 var userRouter = require('./api/routes/user')
 var groupRouter = require('./api/routes/group')
 var giftRouter = require('./api/routes/gift')
-var uploadRouter = require('./api/routes/upload')
+var uploadRouter = require('./api/routes/upload');
+const { infoLog } = require('./api/helper/logging');
 
 
 // Initiate Mongo DB Server Connection
@@ -54,4 +55,4 @@ app.use(function (err, req, res, next) {
 
 
 app.listen(process.env.port || 3000);
-console.log('Webserver running at Port 3000');
+infoLog("Webserver running at Port 3000 \n")

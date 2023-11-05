@@ -1,16 +1,20 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const User = require("../model/User");
+const { infoLog, successLog } = require('../helper/logging');
 const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
 
 const transport = nodemailer.createTransport({
     pool: true,
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
-    secure: true,
+    secureConnection: false,
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
+    },
+    tls: {
+        ciphers:'SSLv3'
     }
 });
 
@@ -18,7 +22,7 @@ transport.verify(function (err, success) {
     if (err) {
         console.log(err);
     } else {
-        console.log("Mailer is ready to take messages")
+        successLog(`Nodemailer sucessuflly connected to ${process.env.SMTP_HOST}`)
     }
 })
 

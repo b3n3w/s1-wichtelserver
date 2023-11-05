@@ -105,7 +105,7 @@ exports.getGroupMembers = async (req, res) => {
         return res.send("No Group Param");
     } else {
         if (req.params) {
-            console.log(req.params.id)
+            
             Group.findOne({ _id: groupId }).
                 populate({ path: "groupmembers", model: "User" })
                 .exec(function (err, posts) {
@@ -115,7 +115,6 @@ exports.getGroupMembers = async (req, res) => {
                     let members = [];
                     let data = [];
 
-                    console.log(posts);
                     var imageAsBase64 = "";
                     posts.groupmembers.forEach(element => {
                         console.log(element.profileImage)

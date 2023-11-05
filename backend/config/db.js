@@ -1,5 +1,6 @@
 
 const mongoose = require("mongoose");
+const { successLog, warningLog } = require("../api/helper/logging");
 
 
 const InitiateMongoServer = async () => {
@@ -12,13 +13,13 @@ const InitiateMongoServer = async () => {
         useCreateIndex: true
       });
 
-      console.log("Connected to MongoDB Cloud Atlas - Cluster0 : wichteln");
+      successLog("Connected to MongoDB Cloud Atlas")
     } catch (e) {
       console.log(e);
       throw e;
     }
   } else {
-    console.log("DB URI not found - please check enviroment variable");
+    warningLog("DB URI not found - please check enviroment variable")
   }
 };
 
