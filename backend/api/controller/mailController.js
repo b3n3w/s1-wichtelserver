@@ -5,8 +5,8 @@ const sender = '"S1 Wichtelfee" <wichtelfee@s1-wichteln.de>';
 
 const transport = nodemailer.createTransport({
     pool: true,
-    host: "smtp.ionos.de",
-    port: 465,
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
     secure: true,
     auth: {
         user: process.env.SMTP_USER,
