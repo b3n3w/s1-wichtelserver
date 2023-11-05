@@ -18,18 +18,10 @@ InitiateMongoServer();
 
 const app = express();
 
-const whitelist = ['https://s1-wichtelserver-git-master-b3n3w.vercel.app', 'https://s1-wichtelserver.vercel.app']
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error())
-    }
-  }
-}
-
-app.use(cors(corsOptions));
+//registering cors
+app.use(cors({
+    origin: '*'
+}));
 
 // configire morgan
 app.use(morgan("dev"));
