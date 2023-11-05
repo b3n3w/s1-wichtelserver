@@ -9,7 +9,7 @@ var userRouter = require('./api/routes/user')
 var groupRouter = require('./api/routes/group')
 var giftRouter = require('./api/routes/gift')
 var uploadRouter = require('./api/routes/upload');
-const { infoLog, warningLog } = require('./api/helper/logging');
+const { infoLog } = require('./api/helper/logging');
 
 
 // Initiate Mongo DB Server Connection
@@ -18,13 +18,11 @@ InitiateMongoServer();
 
 const app = express();
 
-warningLog("tester")
 // configire morgan
 app.use(morgan("dev"));
 
 
 // Middleware
-
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(express.json());
@@ -38,7 +36,7 @@ app.use('/upload', uploadRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('File Not Found');
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -49,7 +47,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
 });
-
 
 
 app.listen(process.env.port || 3000);
