@@ -29,7 +29,7 @@
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
     "sequelize-cli": "^5.5.1",
-    "sharp": "^0.26.3"
+    "sharp": "0.32.6"
   },
   "scripts": {
     "start": "node server.js"
