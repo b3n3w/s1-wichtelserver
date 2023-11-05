@@ -26,8 +26,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // configire morgan
-app.use(morgan("dev"));
+app.use(morgan("combined"));
 
+
+// Custom CORS error handling middleware
+app.use((err, req, res, next) => {
+  if (err.name === 'CorsError') {
+    console.error('CORS Error:', err.message);
+    res.status(403).json({ error: 'CORS Error' });
+  } else {
+    next(err);
+  }
+});
 
 // Middleware
 
