@@ -1,6 +1,6 @@
 <template>
   <div class="heading">
-    <h2>Registration</h2>
+    <h2>Registriere dich jetzt !</h2>
     <form action="#" @submit.prevent="registerUser">
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -88,7 +88,7 @@
         <span class="error" v-if="msg2.zip">{{ msg2.zip }}</span>
       </div>
 
-      <button class="float" type="submit">Registrieren</button>
+      <button class="float" style="background-color: #f8d8c0; color: #303030;" type="submit">Registrieren</button>
     </form>
   </div>
 </template>

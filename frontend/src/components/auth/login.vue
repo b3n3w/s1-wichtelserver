@@ -24,7 +24,7 @@
         />
       </div>
 
-      <button class="float">Login</button>
+      <button class="float" style="background-color: #f8d8c0; color: #303030;">Login</button>
     </form>
   </div>
 </template>
@@ -49,8 +49,8 @@ export default {
           let token = response.data.token;
 
           if (token) {
+            localStorage.setItem("user", response.data.user)
             localStorage.setItem("jwt", token);
-            swal("Success", "Login Successful", "Success");
             if (response.data.firstLogin) {
                this.$router.push("/selectGroup");
               this.$router.push("/setup");
@@ -67,7 +67,10 @@ export default {
               text: "Lieber Wichtel, bitte verifiziere deine Email",
             });
           } else {
-            swal("Error", "Something Went Wrong", "error");
+            swal({
+              title: "Mist",
+              text: "Lieber Wichtel, bitte überprüfe deine Logindaten",
+            });
           }
         }
       );

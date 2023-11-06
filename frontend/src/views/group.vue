@@ -176,8 +176,7 @@ export default {
     },
   },
   created() {
-    console.log(this.groupId);
-    this.userID = jwt_decode(localStorage.getItem("jwt"))._id;
+    this.userID = jwt_decode(localStorage.getItem("user"))._id;
     if (this.groupId) {
       this.$axios
         .get("/group/" + this.groupId, {

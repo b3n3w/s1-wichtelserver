@@ -48,13 +48,15 @@
     <keep-alive>
       <component v-bind:is="component"></component>
     </keep-alive>
-    <div class="container-index">
-    <button class="btn-component-index" v-on:click="component = 'login'"> Zum Login
-    </button>
-    <button class="btn-component-index" v-on:click="component = 'register'">Zur Registrierung</button>
+    <div >
+      <button class="btn-component-index" v-on:click="component = 'login'" v-show="component !== 'login'"> Zum Login
+      </button>
+      <button class="btn-component-index" v-on:click="component = 'register'" v-show="component !== 'register'">Zur
+        Registrierung</button>
     </div>
   </div>
 </template>
+
 
 <script>
 import login from "./auth/login";
@@ -72,6 +74,63 @@ export default {
   },
 };
 </script>
-<style  >
+<style>
+
+.login-container {
+  background-color: hsla(229, 22%, 10%, 0.424);
+  padding: 15px;
+  width: 400px;
+  border-radius: 32px;
+}
+
+.btn-component-index {
+  background: #f8d8c0;
+  margin-top: 10px;
+  border: none;
+  font-size: 15px;
+  margin-left: 14px;
+  border-radius: 32px;
+  width: 50%;
+  color: #303030;
+}
+
+@media only screen and (max-width: 480px) {
+  .login {
+    margin-top: 5%;
+    width: 300px;
+    font-size: 15px;
+    min-height: 0;
+  }
+
+  .login-container {
+    background-color: rgba(20, 22, 31, 0.424);
+    padding: 30px;
+    width: 300px;
+    border-radius: 32px;
+  }
+
+  .login h2 {
+    margin-top: 0;
+  }
+
+  .card {
+    margin-left: 100px;
+  }
+
+  .container-index {
+    margin-top: 10px;
+
+  }
+
+  .heading_index h1 {
+    margin: 10px;
+    font-size: 1.5em;
+    color: rgb(255, 255, 255);
+  }
+
+  #christmas {
+    margin-top: 10px;
+  }
+}
 </style>
 

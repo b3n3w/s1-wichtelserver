@@ -622,13 +622,6 @@ body, input, button {
   color: white;
 }
 
-.login-container {
-  background-color: hsla(229, 22%, 10%, 0.424);
-  padding: 15px;
-  width: 400px;
-  border-radius: 32px;
-}
-
 .login {
   display: flex;
   justify-content: center;
@@ -801,15 +794,6 @@ body, input, button {
   .container-index {
     margin-top: 10px;
   
-  }
-  .btn-component-index {
-    margin-top: 10px;
-    background: #32394f85;
-    border: none;
-    font-size: 15px;
-    margin-left: 14px;
-    border-radius: 32px;
-    color: white;
   }
   .heading_index h1 {
     margin: 10px;
